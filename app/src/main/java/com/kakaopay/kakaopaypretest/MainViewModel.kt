@@ -13,12 +13,18 @@ import io.reactivex.schedulers.Schedulers
 
 
 class MainViewModel : ViewModel() {
-    var imageSearchResultLiveData = MutableLiveData<SearchResult>()
+
+    private val _imageSearchResultLiveData = MutableLiveData<SearchResult>().apply {
+        value = SearchResult(mutableListOf(), Meta(-1, -1, false))
+    }
+
+    val imageSearchResultLiveData: LiveData<SearchResult> get() = _imageSearchResultLiveData
+    var result: SearchResult? = null
+
 
     private val repository: MainRepository by lazy {
         MainRepository()
     }
-
 
     fun searchImage(query: String, sort: KakaoImageSearchSortEnum, page: Int, size: Int) {
         addDisposable(
@@ -26,11 +32,12 @@ class MainViewModel : ViewModel() {
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(Consumer {
-                            imageSearchResultLiveData.postValue(it)
+                            Log.e("검색", "${it!!.documents}")
+                            _imageSearchResultLiveData.postValue(it)
+
                         })
         )
     }
-
 
     private val compositeDisposable by lazy {
         CompositeDisposable()

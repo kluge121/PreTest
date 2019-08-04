@@ -16,7 +16,6 @@ class MainRecyclerViewAdapter() : RecyclerView.Adapter<BaseImageViewHolder<Image
         val binding: ItemMainImageBinding =
                 DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_main_image, parent, false)
 
-
         return NormalImageViewHolder(binding)
 
     }
@@ -33,6 +32,9 @@ class MainRecyclerViewAdapter() : RecyclerView.Adapter<BaseImageViewHolder<Image
         items.clear()
         items.addAll(newItem)
     }
+
+
+
 }
 
 
