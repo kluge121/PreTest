@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
     private fun initView() {
         setSupportActionBar(mainToolbar)
         supportActionBar!!.title = resources.getString(R.string.name)
+        mainRecyclerView.adapter = MainRecyclerViewAdapter()
     }
 
 
