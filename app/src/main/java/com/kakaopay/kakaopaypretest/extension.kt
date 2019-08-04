@@ -6,10 +6,9 @@ import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 
 
-//DataBinding RecyclerView
-@BindingAdapter("bind:item")
-fun RecyclerView.bindItem(list: LiveData<Any>) {
 
+@BindingAdapter("items")
+fun RecyclerView.bindingItem(list: LiveData<Any>) {
     this.adapter.let {
         (this.adapter as? MainRecyclerViewAdapter<Any>)?.run {
             replaceAll(list.value as MutableList<Any>)
@@ -17,6 +16,7 @@ fun RecyclerView.bindItem(list: LiveData<Any>) {
         }
     }
 }
+
 
 
 //DataBinding Glide

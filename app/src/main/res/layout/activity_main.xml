@@ -5,6 +5,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="vm"
+            type="com.kakaopay.kakaopaypretest.MainViewModel" />
+
+
+
+    </data>
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
 
@@ -24,8 +34,11 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/mainRecyclerView"
+            app:items="@{vm.imageSearchResultLiveData}"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:adapter="@{adapter}"
+            app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

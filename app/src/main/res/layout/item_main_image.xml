@@ -7,17 +7,16 @@
 
         <variable
             name="item"
-            type="com.kakaopay.kakaopaypretest.SearchResult.ImageItem" />
+            type="com.kakaopay.kakaopaypretest.ImageItem" />
 
 
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </layout>

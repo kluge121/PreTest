@@ -1,30 +1,26 @@
 package com.kakaopay.kakaopaypretest
 
-import android.widget.ImageView
-import androidx.databinding.BindingAdapter
-
 data class SearchResult(
+        var images: ArrayList<ImageItem>,
+        var meta: Meta
 
-    val images: ArrayList<ImageItem>,
-    val meta: Meta
+)
 
-) {
-    data class Meta(
+data class Meta(
 
-        val total_count: Int,
-        val pageable_count: Int,
-        val is_end: Boolean
+        var total_count: Int,
+        var pageable_count: Int,
+        var is_end: Boolean
 
-    )
+)
 
-    data class ImageItem(
-        val collection: String,
-        val thumbnail_url: String,
-        val image_url: String,
-        val width: Int,
-        val height: Int,
-        val display_sitename: String,
-        val doc_url: String,
-        val datetime: String
-    )
-}
+data class ImageItem(
+        var collection: String,
+        var thumbnail_url: String,
+        var image_url: String,
+        var width: Int,
+        var height: Int,
+        var display_sitename: String,
+        var doc_url: String,
+        var datetime: String
+)

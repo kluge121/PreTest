@@ -1,6 +1,5 @@
 package com.kakaopay.kakaopaypretest
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.kakaopay.kakaopaypretest.constant.KakaoImageSearchSortEnum
@@ -18,20 +17,17 @@ class MainViewModel : ViewModel() {
         MainRepository()
     }
 
-    private val _imageSearchResultLiveData = MutableLiveData<SearchResult>()
-
-    val imageSearchResultLiveData: LiveData<SearchResult>
-        get() = _imageSearchResultLiveData
+    var imageSearchResultLiveData = MutableLiveData<SearchResult>()
 
 
     fun searchImage(query: String, sort: KakaoImageSearchSortEnum, page: Int, size: Int) {
         addDisposable(
-            repository.searchImage(query, sort, page, size)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(Consumer {
-                    _imageSearchResultLiveData.postValue(it)
-                })
+                repository.searchImage(query, sort, page, size)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(Consumer {
+                            imageSearchResultLiveData.postValue(it)
+                        })
         )
     }
 
