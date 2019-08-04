@@ -1,18 +1,24 @@
 package com.kakaopay.kakaopaypretest
 
+import android.content.Context
+import android.graphics.Point
 import android.os.Bundle
 import android.view.Menu
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.kakaopay.kakaopaypretest.constant.DEFAULT_SEARCH_IMAGE_PAGE
 import com.kakaopay.kakaopaypretest.constant.DEFAULT_SEARCH_IMAGE_SIZE
 import com.kakaopay.kakaopaypretest.constant.KakaoImageSearchSortEnum
 import com.kakaopay.kakaopaypretest.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.activity_main.*
+import android.view.Display
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -40,12 +46,17 @@ class MainActivity : AppCompatActivity() {
     private fun initView() {
         setSupportActionBar(mainToolbar)
         supportActionBar!!.title = resources.getString(R.string.name)
-        mainRecyclerView.adapter = MainRecyclerViewAdapter()
-        val manager = (mainRecyclerView.layoutManager as StaggeredGridLayoutManager).apply {
-            spanCount = 3
-            orientation = 1
-        }
-        mainRecyclerView.layoutManager = manager
+
+
+        val wm = getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        val display = wm.defaultDisplay
+        val size = Point()
+        display.getSize(size)
+        val widthSize = size.x
+
+
+        mainRecyclerView.adapter = MainRecyclerViewAdapter(widthSize)
+        mainRecyclerView.layoutManager = StaggeredGridLayoutManager(4, RecyclerView.VERTICAL)
 
     }
 

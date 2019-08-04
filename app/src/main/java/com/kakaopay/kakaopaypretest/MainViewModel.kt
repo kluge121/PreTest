@@ -17,10 +17,7 @@ class MainViewModel : ViewModel() {
     private val _imageSearchResultLiveData = MutableLiveData<SearchResult>().apply {
         value = SearchResult(mutableListOf(), Meta(-1, -1, false))
     }
-
     val imageSearchResultLiveData: LiveData<SearchResult> get() = _imageSearchResultLiveData
-    var result: SearchResult? = null
-
 
     private val repository: MainRepository by lazy {
         MainRepository()
@@ -32,7 +29,6 @@ class MainViewModel : ViewModel() {
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(Consumer {
-                            Log.e("검색", "${it!!.documents}")
                             _imageSearchResultLiveData.postValue(it)
 
                         })

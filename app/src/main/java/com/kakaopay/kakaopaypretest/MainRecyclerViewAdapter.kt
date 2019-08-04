@@ -2,20 +2,19 @@ package com.kakaopay.kakaopaypretest
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.kakaopay.kakaopaypretest.databinding.ItemMainImageBinding
 
 
-class MainRecyclerViewAdapter() : RecyclerView.Adapter<BaseImageViewHolder<ImageItem>>() {
+class MainRecyclerViewAdapter(var screenWidthSize: Int) : RecyclerView.Adapter<BaseImageViewHolder<ImageItem>>() {
 
     private val items = mutableListOf<ImageItem>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseImageViewHolder<ImageItem> {
-
         val binding: ItemMainImageBinding =
                 DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_main_image, parent, false)
-
         return NormalImageViewHolder(binding)
 
     }
@@ -32,7 +31,6 @@ class MainRecyclerViewAdapter() : RecyclerView.Adapter<BaseImageViewHolder<Image
         items.clear()
         items.addAll(newItem)
     }
-
 
 
 }
