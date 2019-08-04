@@ -1,7 +1,7 @@
 package com.kakaopay.kakaopaypretest
 
 data class SearchResult(
-        var images: ArrayList<ImageItem>,
+        var documents: MutableList<ImageItem>,
         var meta: Meta
 
 )

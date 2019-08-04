@@ -8,8 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 
 
 @BindingAdapter("items")
-fun RecyclerView.bindingItem(list : MutableLiveData<SearchResult>) {
+fun RecyclerView.bindingItem(result: MutableLiveData<SearchResult>) {
 
+    if (this.adapter != null) {
+        (this.adapter as MainRecyclerViewAdapter).replaceAll(result.value!!.documents)
+    }
 }
 
 

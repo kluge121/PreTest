@@ -1,5 +1,7 @@
 package com.kakaopay.kakaopaypretest
 
+import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.kakaopay.kakaopaypretest.constant.KakaoImageSearchSortEnum
@@ -11,10 +13,7 @@ import io.reactivex.schedulers.Schedulers
 
 
 class MainViewModel : ViewModel() {
-
-
     var imageSearchResultLiveData = MutableLiveData<SearchResult>()
-
 
     private val repository: MainRepository by lazy {
         MainRepository()
