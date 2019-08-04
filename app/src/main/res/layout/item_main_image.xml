@@ -18,6 +18,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
+            android:layout_gravity="center"
             glideImageUrl="@{item.thumbnail_url}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

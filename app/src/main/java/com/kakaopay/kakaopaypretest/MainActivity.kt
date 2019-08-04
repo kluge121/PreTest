@@ -18,6 +18,7 @@ import com.kakaopay.kakaopaypretest.constant.KakaoImageSearchSortEnum
 import com.kakaopay.kakaopaypretest.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.activity_main.*
 import android.view.Display
+import androidx.recyclerview.widget.GridLayoutManager
 
 
 class MainActivity : AppCompatActivity() {
@@ -56,7 +57,8 @@ class MainActivity : AppCompatActivity() {
 
 
         mainRecyclerView.adapter = MainRecyclerViewAdapter(widthSize)
-        mainRecyclerView.layoutManager = StaggeredGridLayoutManager(4, RecyclerView.VERTICAL)
+        mainRecyclerView.layoutManager = GridLayoutManager(baseContext,3)
+//        mainRecyclerView.addItemDecoration(ItemSpaceDecoration())
 
     }
 
