@@ -2,7 +2,7 @@ package com.kakaopay.kakaopaypretest.retrofit
 
 import com.kakaopay.kakaopaypretest.SearchResult
 
-import com.kakaopay.pretest.constant.IMAGE_SEARCH_API_SUB_URL
+import com.kakaopay.kakaopaypretest.constant.IMAGE_SEARCH_API_SUB_URL
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Header
