@@ -13,11 +13,12 @@ import io.reactivex.schedulers.Schedulers
 class MainViewModel : ViewModel() {
 
 
+    var imageSearchResultLiveData = MutableLiveData<SearchResult>()
+
+
     private val repository: MainRepository by lazy {
         MainRepository()
     }
-
-    var imageSearchResultLiveData = MutableLiveData<SearchResult>()
 
 
     fun searchImage(query: String, sort: KakaoImageSearchSortEnum, page: Int, size: Int) {

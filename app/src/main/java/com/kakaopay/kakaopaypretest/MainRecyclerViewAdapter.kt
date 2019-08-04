@@ -6,11 +6,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kakaopay.kakaopaypretest.databinding.ItemMainImageBinding
 
 
-class MainRecyclerViewAdapter<T>() : RecyclerView.Adapter<BaseImageViewHolder<T>>() {
+class MainRecyclerViewAdapter() : RecyclerView.Adapter<BaseImageViewHolder<ImageItem>>() {
 
-    private val items = mutableListOf<T>()
+    private val items = mutableListOf<ImageItem>()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseImageViewHolder<T> {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseImageViewHolder<ImageItem> {
 
         val binding =
                 ItemMainImageBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -18,7 +18,7 @@ class MainRecyclerViewAdapter<T>() : RecyclerView.Adapter<BaseImageViewHolder<T>
 
     }
 
-    override fun onBindViewHolder(holder: BaseImageViewHolder<T>, position: Int) {
+    override fun onBindViewHolder(holder: BaseImageViewHolder<ImageItem>, position: Int) {
         if (holder is NormalImageViewHolder) {
             holder.bindView(items[position])
         }
@@ -26,7 +26,7 @@ class MainRecyclerViewAdapter<T>() : RecyclerView.Adapter<BaseImageViewHolder<T>
 
     override fun getItemCount() = items.size
 
-    fun replaceAll(newItem: MutableList<T>) {
+    fun replaceAll(newItem: MutableList<ImageItem>) {
         items.clear()
         items.addAll(newItem)
     }

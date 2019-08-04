@@ -24,17 +24,15 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        binding()
+        bindInit()
         initView()
 
     }
 
-
-    private fun binding() {
-        val adapter = MainRecyclerViewAdapter<ImageItem>()
-        mainBinding.adapter = adapter
+    private fun bindInit() {
         mainBinding.vm = mainViewModel
     }
+
 
     private fun initView() {
         setSupportActionBar(mainToolbar)
