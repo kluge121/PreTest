@@ -8,17 +8,13 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import com.kakaopay.kakaopaypretest.constant.DEFAULT_SEARCH_IMAGE_PAGE
 import com.kakaopay.kakaopaypretest.constant.DEFAULT_SEARCH_IMAGE_SIZE
 import com.kakaopay.kakaopaypretest.constant.KakaoImageSearchSortEnum
 import com.kakaopay.kakaopaypretest.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.activity_main.*
-import android.view.Display
-import androidx.recyclerview.widget.GridLayoutManager
 
 
 class MainActivity : AppCompatActivity() {
@@ -57,8 +53,8 @@ class MainActivity : AppCompatActivity() {
 
 
         mainRecyclerView.adapter = MainRecyclerViewAdapter(widthSize)
+        mainRecyclerView.addItemDecoration(ItemSpaceDecoration())
         mainRecyclerView.layoutManager = GridLayoutManager(baseContext,3)
-//        mainRecyclerView.addItemDecoration(ItemSpaceDecoration())
 
     }
 

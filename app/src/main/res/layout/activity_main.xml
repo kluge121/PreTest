@@ -10,8 +10,6 @@
         <variable
             name="vm"
             type="com.kakaopay.kakaopaypretest.MainViewModel" />
-
-
     </data>
 
 
@@ -31,15 +29,28 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/mainRecyclerView"
             items="@{vm.imageSearchResultLiveData}"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mainToolbar" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/search_do_it"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mainToolbar" />
+            app:layout_constraintTop_toTopOf="@+id/mainToolbar" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

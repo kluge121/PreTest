@@ -2,5 +2,6 @@
 <resources>
     
     <dimen name="toolbar_title_size">20dp</dimen>
-    <dimen name="item_space_size">5dp</dimen>
+    <dimen name="item_between_space_size">12dp</dimen>
+    <dimen name="item_edge_space_size">6dp</dimen>
 </resources>
