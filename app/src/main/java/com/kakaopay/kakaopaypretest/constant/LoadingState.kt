@@ -1,4 +1,4 @@
-package com.kakaopay.kakaopaypretest
+package com.kakaopay.kakaopaypretest.constant
 
 
 

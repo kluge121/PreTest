@@ -8,7 +8,7 @@
 
         <variable
             name="item"
-            type="com.kakaopay.kakaopaypretest.ImageItem" />
+            type="com.kakaopay.kakaopaypretest.model.ImageItem" />
 
 
     </data>
@@ -22,10 +22,10 @@
 
 
         <androidx.cardview.widget.CardView
-            android:padding="5dp"
-            android:layout_gravity="center_horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:padding="5dp">
 
             <ImageView
                 glideImageUrl="@{item.thumbnail_url}"

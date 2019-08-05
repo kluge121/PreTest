@@ -1,4 +1,4 @@
-package com.kakaopay.kakaopaypretest
+package com.kakaopay.kakaopaypretest.view
 
 import android.graphics.Rect
 import android.view.LayoutInflater
@@ -7,6 +7,9 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.kakaopay.kakaopaypretest.BR
+import com.kakaopay.kakaopaypretest.model.ImageItem
+import com.kakaopay.kakaopaypretest.R
 import com.kakaopay.kakaopaypretest.databinding.ItemMainImageBinding
 
 

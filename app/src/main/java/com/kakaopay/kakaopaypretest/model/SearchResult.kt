@@ -1,4 +1,4 @@
-package com.kakaopay.kakaopaypretest
+package com.kakaopay.kakaopaypretest.model
 
 data class SearchResult(
         var documents: MutableList<ImageItem>,

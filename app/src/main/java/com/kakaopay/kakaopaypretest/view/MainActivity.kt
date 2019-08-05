@@ -1,4 +1,4 @@
-package com.kakaopay.kakaopaypretest
+package com.kakaopay.kakaopaypretest.view
 
 import android.content.Context
 import android.graphics.Point
@@ -12,7 +12,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.kakaopay.kakaopaypretest.R
 import com.kakaopay.kakaopaypretest.constant.DEFAULT_SEARCH_IMAGE_PAGE
 import com.kakaopay.kakaopaypretest.constant.DEFAULT_SEARCH_IMAGE_SIZE
 import com.kakaopay.kakaopaypretest.constant.KakaoImageSearchSortEnum
@@ -69,13 +69,10 @@ class MainActivity : AppCompatActivity() {
         searchView.queryHint = resources.getString(R.string.query_hint)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-
-                query.let {
-                    if (it!!.isNotBlank())
-                        mainViewModel.searchImage(
-                                it, KakaoImageSearchSortEnum.ACCURACY, DEFAULT_SEARCH_IMAGE_PAGE,
-                                DEFAULT_SEARCH_IMAGE_SIZE
-                        )
+                if (query!!.isNotEmpty()) {
+                    mainViewModel.searchImage(query, KakaoImageSearchSortEnum.ACCURACY, DEFAULT_SEARCH_IMAGE_PAGE, DEFAULT_SEARCH_IMAGE_SIZE)
+                } else if (query.isEmpty()) {
+                    showToast(getString(R.string.toast_please_input))
                 }
 
 
@@ -93,11 +90,18 @@ class MainActivity : AppCompatActivity() {
 
         if (item.itemId == R.id.menu_main_init) {
             mainViewModel.clearItem()
-            if (toast == null) {
-                toast = Toast.makeText(baseContext, getString(R.string.msg_search_init), Toast.LENGTH_SHORT)
-            }
-            toast?.show()
+            showToast(getString(R.string.toast_search_init))
         }
         return super.onOptionsItemSelected(item)
     }
+
+    private fun showToast(msg: String) {
+        if (toast == null) {
+            toast = Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT)
+        } else {
+            toast!!.setText(msg)
+        }
+        toast?.show()
+    }
+
 }

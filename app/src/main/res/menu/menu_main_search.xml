@@ -13,7 +13,7 @@
         android:id="@+id/menu_main_search"
         android:icon="@drawable/ic_search_icon"
         android:title="@string/search"
-        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:actionViewClass="com.kakaopay.kakaopaypretest.custom.EmptySubmitSearchView"
         app:showAsAction="collapseActionView|always" />
 
 

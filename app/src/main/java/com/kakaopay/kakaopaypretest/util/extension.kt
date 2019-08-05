@@ -1,6 +1,5 @@
-package com.kakaopay.kakaopaypretest
+package com.kakaopay.kakaopaypretest.util
 
-import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.ImageView
@@ -8,6 +7,10 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.kakaopay.kakaopaypretest.*
+import com.kakaopay.kakaopaypretest.constant.LoadingState
+import com.kakaopay.kakaopaypretest.model.SearchResult
+import com.kakaopay.kakaopaypretest.view.MainRecyclerViewAdapter
 
 
 //RecyclerView Adapter item , 의존성 주입 대체?

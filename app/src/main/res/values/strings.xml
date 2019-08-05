@@ -5,7 +5,8 @@
     <string name="query_hint">검색할 이미지를 입력하세요.</string>
     <string name="search_do_it">이미지를 검색해보세요!</string>
     <string name="init">init</string>
-    <string name="msg_search_init">검색결과가 초기화됐습니다.</string>
+    <string name="toast_search_init">검색결과가 초기화됐습니다.</string>
+    <string name="toast_please_input">1글자 이상 입력해주세요</string>
     <string name="not_found">검색 결과가 없습니다.</string>
     <string name="network_error">네트워크 연결을 확인해주세요.</string>
 </resources>

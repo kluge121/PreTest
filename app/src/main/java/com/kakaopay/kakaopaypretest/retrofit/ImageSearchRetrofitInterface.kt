@@ -1,6 +1,6 @@
 package com.kakaopay.kakaopaypretest.retrofit
 
-import com.kakaopay.kakaopaypretest.SearchResult
+import com.kakaopay.kakaopaypretest.model.SearchResult
 
 import com.kakaopay.kakaopaypretest.constant.IMAGE_SEARCH_API_SUB_URL
 import io.reactivex.Single

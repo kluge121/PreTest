@@ -1,14 +1,15 @@
-package com.kakaopay.kakaopaypretest
+package com.kakaopay.kakaopaypretest.view
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.kakaopay.kakaopaypretest.model.MainRepository
+import com.kakaopay.kakaopaypretest.model.SearchResult
 import com.kakaopay.kakaopaypretest.constant.KakaoImageSearchSortEnum
+import com.kakaopay.kakaopaypretest.constant.LoadingState
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
-import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 
 
@@ -43,7 +44,6 @@ class MainViewModel : ViewModel() {
                             }
                             _imageSearchResultLiveData.value = it
                         }, {
-                            Log.e("dddd",it.toString())
                             _state.value = LoadingState.NETWORK_ERROR
                         })
         )

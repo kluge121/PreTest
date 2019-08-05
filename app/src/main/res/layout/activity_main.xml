@@ -9,15 +9,14 @@
 
         <variable
             name="vm"
-            type="com.kakaopay.kakaopaypretest.MainViewModel" />
+            type="com.kakaopay.kakaopaypretest.view.MainViewModel" />
     </data>
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
-        tools:context=".MainActivity">
+        tools:context=".view.MainActivity">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/mainToolbar"
@@ -35,6 +34,7 @@
             items="@{vm.imageSearchResultLiveData}"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:background="@color/white"
             android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

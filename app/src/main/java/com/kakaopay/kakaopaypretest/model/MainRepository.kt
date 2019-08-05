@@ -1,4 +1,4 @@
-package com.kakaopay.kakaopaypretest
+package com.kakaopay.kakaopaypretest.model
 
 import com.kakaopay.kakaopaypretest.constant.KakaoImageSearchSortEnum
 import com.kakaopay.kakaopaypretest.retrofit.ImageSearchRetrofitInterface
