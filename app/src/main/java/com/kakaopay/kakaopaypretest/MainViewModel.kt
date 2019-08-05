@@ -1,5 +1,6 @@
 package com.kakaopay.kakaopaypretest
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -18,17 +19,32 @@ class MainViewModel : ViewModel() {
     }
     val imageSearchResultLiveData: LiveData<SearchResult> get() = _imageSearchResultLiveData
 
+    private val _state = MutableLiveData<LoadingState>().apply {
+        value = LoadingState.WAIT
+    }
+    val state: LiveData<LoadingState> get() = _state
+
+
     private val repository: MainRepository by lazy {
         MainRepository()
     }
 
     fun searchImage(query: String, sort: KakaoImageSearchSortEnum, page: Int, size: Int) {
+        _state.value = LoadingState.LOADING
         addDisposable(
                 repository.searchImage(query, sort, page, size)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(Consumer {
-                            _imageSearchResultLiveData.postValue(it)
+                        .subscribe({
+                            if (it.documents.size == 0) {
+                                _state.value = LoadingState.NOT_FOUND
+                            } else {
+                                _state.value = LoadingState.WAIT
+                            }
+                            _imageSearchResultLiveData.value = it
+                        }, {
+                            Log.e("dddd",it.toString())
+                            _state.value = LoadingState.NETWORK_ERROR
                         })
         )
     }

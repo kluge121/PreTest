@@ -8,6 +8,7 @@ import io.reactivex.Single
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import java.net.URLEncoder
 
 class MainRepository {
 
@@ -26,7 +27,8 @@ class MainRepository {
     fun searchImage(query: String, sort: KakaoImageSearchSortEnum, page: Int, size: Int): Single<SearchResult> {
         //header query sort page size
         val header = "KakaoAK $KAKAO_REST_KEY"
-        return service.searchImage(header, query, sort.name, page, size)
+
+        return service.searchImage(header, URLEncoder.encode(query, "UTF-8"), sort.name, page, size)
     }
 
 

@@ -14,9 +14,9 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         tools:context=".MainActivity">
 
         <androidx.appcompat.widget.Toolbar
@@ -42,16 +42,29 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/mainToolbar" />
 
-
-        <TextView
-            result="@{vm.imageSearchResultLiveData}"
+        <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/search_do_it"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mainToolbar" />
+            app:layout_constraintTop_toBottomOf="@+id/mainToolbar">
+
+            <TextView
+                progress="@{vm.state}"
+                result="@{vm.imageSearchResultLiveData}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/search_do_it" />
+
+            <ProgressBar
+                progress="@{vm.state}"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center" />
+
+
+        </FrameLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

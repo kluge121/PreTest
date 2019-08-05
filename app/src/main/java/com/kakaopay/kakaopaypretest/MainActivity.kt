@@ -53,7 +53,10 @@ class MainActivity : AppCompatActivity() {
         val widthSize = size.x
         mainRecyclerView.adapter = MainRecyclerViewAdapter(widthSize)
         mainRecyclerView.addItemDecoration(ItemSpaceDecoration())
-        mainRecyclerView.layoutManager = GridLayoutManager(baseContext, 3) as RecyclerView.LayoutManager?
+        mainRecyclerView.layoutManager = GridLayoutManager(
+                baseContext,
+                3
+        )
 
     }
 
@@ -74,6 +77,7 @@ class MainActivity : AppCompatActivity() {
                                 DEFAULT_SEARCH_IMAGE_SIZE
                         )
                 }
+
 
                 return false
             }

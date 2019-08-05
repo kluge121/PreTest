@@ -1,7 +1,10 @@
 package com.kakaopay.kakaopaypretest
 
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -25,7 +28,6 @@ fun RecyclerView.bindingItem(result: SearchResult) {
     }
 }
 
-
 //DataBinding Glide
 @BindingAdapter("glideImageUrl")
 fun ImageView.loadImage(imageUrl: String) {
@@ -36,11 +38,29 @@ fun ImageView.loadImage(imageUrl: String) {
 }
 
 //TextView search do it!
-@BindingAdapter("result")
-fun TextView.imageCheck(result: SearchResult) {
-    if (result.documents.size == 0) {
-        this.visibility = View.VISIBLE
-    } else if (result.documents.size >= 1) {
-        this.visibility = View.GONE
+@BindingAdapter(value = ["result", "progress"])
+fun TextView.imageCheck(result: SearchResult, state: LoadingState) {
+    if (result.documents.size == 0 && state == LoadingState.WAIT) {
+        this.text = context.getString(R.string.search_do_it)
+        this.visibility = VISIBLE
+    } else if (result.documents.size == 0 && state == LoadingState.NOT_FOUND) {
+        this.text = context.getString(R.string.not_found)
+        this.visibility = VISIBLE
+    } else if (state == LoadingState.LOADING) {
+        this.visibility = GONE
+    } else if (state == LoadingState.NETWORK_ERROR) {
+        this.text = context.getString(R.string.network_error)
+        this.visibility = VISIBLE
     }
+}
+
+
+@BindingAdapter("progress")
+fun ProgressBar.toggle(state: LoadingState) {
+    if (state == LoadingState.LOADING) {
+        this.visibility = VISIBLE
+    } else if (state == LoadingState.WAIT || state == LoadingState.NETWORK_ERROR || state == LoadingState.NOT_FOUND) {
+        this.visibility = GONE
+    }
+
 }
