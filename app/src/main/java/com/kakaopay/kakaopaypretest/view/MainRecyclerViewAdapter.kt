@@ -44,7 +44,9 @@ class MainRecyclerViewAdapter(screenWidthSize: Int) : RecyclerView.Adapter<BaseI
         items.addAll(newItem)
     }
 
-
+    override fun getItemId(position: Int): Long {
+        return items[position].image_url.hashCode().toLong()
+    }
 }
 
 
@@ -75,12 +77,12 @@ class ItemSpaceDecoration : RecyclerView.ItemDecoration() {
 
 
 
-        if(spanIndex == 0){
+        if (spanIndex == 0) {
             outRect.left = edgeSpace
-        }else if(spanIndex==1){
+        } else if (spanIndex == 1) {
             outRect.right = edgeSpace
             outRect.left = edgeSpace
-        }else if(spanIndex == 2){
+        } else if (spanIndex == 2) {
             outRect.right = edgeSpace
         }
 

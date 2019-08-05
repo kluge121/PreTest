@@ -10,12 +10,15 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import com.kakaopay.kakaopaypretest.R
 import com.kakaopay.kakaopaypretest.constant.DEFAULT_SEARCH_IMAGE_PAGE
 import com.kakaopay.kakaopaypretest.constant.DEFAULT_SEARCH_IMAGE_SIZE
 import com.kakaopay.kakaopaypretest.constant.KakaoImageSearchSortEnum
+import com.kakaopay.kakaopaypretest.constant.LoadingState
+import com.kakaopay.kakaopaypretest.custom.EndlessRecyclerViewScrollListener
 import com.kakaopay.kakaopaypretest.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -51,12 +54,24 @@ class MainActivity : AppCompatActivity() {
         val size = Point()
         display.getSize(size)
         val widthSize = size.x
-        mainRecyclerView.adapter = MainRecyclerViewAdapter(widthSize)
+
+        val adapter = MainRecyclerViewAdapter(widthSize)
+        adapter.setHasStableIds(true)
+        mainRecyclerView.adapter = adapter
+
         mainRecyclerView.addItemDecoration(ItemSpaceDecoration())
-        mainRecyclerView.layoutManager = GridLayoutManager(
-                baseContext,
-                3
-        )
+        val manager = GridLayoutManager(baseContext, 3)
+
+        mainRecyclerView.layoutManager = manager
+        mainRecyclerView.addOnScrollListener(object : EndlessRecyclerViewScrollListener() {
+            override fun loadMore() {
+
+                if (mainViewModel.state.value != LoadingState.LOADING) {
+                    mainViewModel.addSearchImage(KakaoImageSearchSortEnum.ACCURACY, DEFAULT_SEARCH_IMAGE_SIZE)
+                }
+            }
+        })
+
 
     }
 
@@ -66,16 +81,17 @@ class MainActivity : AppCompatActivity() {
 
         //searchView
         val searchView = menu!!.findItem(R.id.menu_main_search).actionView as SearchView
+
         searchView.queryHint = resources.getString(R.string.query_hint)
+
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query!!.isNotEmpty()) {
                     mainViewModel.searchImage(query, KakaoImageSearchSortEnum.ACCURACY, DEFAULT_SEARCH_IMAGE_PAGE, DEFAULT_SEARCH_IMAGE_SIZE)
                 } else if (query.isEmpty()) {
                     showToast(getString(R.string.toast_please_input))
                 }
-
-
                 return false
             }
 
@@ -83,6 +99,8 @@ class MainActivity : AppCompatActivity() {
                 return false
             }
         })
+
+
         return super.onCreateOptionsMenu(menu)
     }
 

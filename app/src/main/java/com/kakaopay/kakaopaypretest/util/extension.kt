@@ -36,7 +36,11 @@ fun RecyclerView.bindingItem(result: SearchResult) {
 fun ImageView.loadImage(imageUrl: String) {
     GlideApp.with(this.context)
             .load(imageUrl)
+            .thumbnail(GlideApp.with(this.context)
+                    .load(imageUrl)
+                    .override(200, 200))
             .centerCrop()
+            .override(200, 200)
             .into(this)
 }
 
@@ -58,6 +62,7 @@ fun TextView.imageCheck(result: SearchResult, state: LoadingState) {
 }
 
 
+//progress toggle
 @BindingAdapter("progress")
 fun ProgressBar.toggle(state: LoadingState) {
     if (state == LoadingState.LOADING) {

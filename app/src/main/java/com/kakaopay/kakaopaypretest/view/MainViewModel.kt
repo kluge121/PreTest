@@ -1,5 +1,6 @@
 package com.kakaopay.kakaopaypretest.view
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -25,6 +26,9 @@ class MainViewModel : ViewModel() {
     }
     val state: LiveData<LoadingState> get() = _state
 
+    private var page: Int = 0
+    private var query: String = ""
+    private var isNextPage: Boolean = false
 
     private val repository: MainRepository by lazy {
         MainRepository()
@@ -32,14 +36,17 @@ class MainViewModel : ViewModel() {
 
     fun searchImage(query: String, sort: KakaoImageSearchSortEnum, page: Int, size: Int) {
         _state.value = LoadingState.LOADING
+        this.query = query
+        this.page = page
         addDisposable(
-                repository.searchImage(query, sort, page, size)
+                repository.searchImage(this.query, sort, page, size)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({
                             if (it.documents.size == 0) {
                                 _state.value = LoadingState.NOT_FOUND
                             } else {
+                                isNextPage = it.meta!!.is_end
                                 _state.value = LoadingState.WAIT
                             }
                             _imageSearchResultLiveData.value = it
@@ -49,8 +56,36 @@ class MainViewModel : ViewModel() {
         )
     }
 
+
+    fun addSearchImage(sort: KakaoImageSearchSortEnum, size: Int) {
+        _state.value = LoadingState.LOADING
+        if (!isNextPage) {
+            addDisposable(
+                    repository.searchImage(query, sort, page + 1, size)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe({
+                                isNextPage = it.meta!!.is_end
+                                _state.value = LoadingState.WAIT
+                                val result = _imageSearchResultLiveData.value
+                                result!!.documents.addAll(it.documents)
+                                _imageSearchResultLiveData.value = result
+                                page += 1
+                                Log.e("추가 로딩", "현재 page = ${page}")
+
+                            }, {
+                                _state.value = LoadingState.NETWORK_ERROR
+                            })
+            )
+        }
+
+    }
+
+
     fun clearItem() {
         _imageSearchResultLiveData.postValue(SearchResult(mutableListOf(), null))
+        page = 0
+        query = ""
     }
 
     private val compositeDisposable by lazy {
