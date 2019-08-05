@@ -17,6 +17,11 @@ fun RecyclerView.bindingItem(result: SearchResult) {
                 notifyDataSetChanged()
             }
         }
+    } else {
+        (this.adapter as MainRecyclerViewAdapter).run {
+            replaceAll(result.documents)
+            notifyDataSetChanged()
+        }
     }
 }
 
@@ -31,7 +36,7 @@ fun ImageView.loadImage(imageUrl: String) {
 }
 
 //TextView search do it!
-@BindingAdapter("imageCheck")
+@BindingAdapter("result")
 fun TextView.imageCheck(result: SearchResult) {
     if (result.documents.size == 0) {
         this.visibility = View.VISIBLE

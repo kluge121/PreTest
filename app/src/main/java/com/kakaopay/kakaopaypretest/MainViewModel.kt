@@ -1,6 +1,5 @@
 package com.kakaopay.kakaopaypretest
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,7 +14,7 @@ import io.reactivex.schedulers.Schedulers
 class MainViewModel : ViewModel() {
 
     private val _imageSearchResultLiveData = MutableLiveData<SearchResult>().apply {
-        value = SearchResult(mutableListOf(), Meta(-1, -1, false))
+        value = SearchResult(mutableListOf(), null)
     }
     val imageSearchResultLiveData: LiveData<SearchResult> get() = _imageSearchResultLiveData
 
@@ -30,9 +29,12 @@ class MainViewModel : ViewModel() {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(Consumer {
                             _imageSearchResultLiveData.postValue(it)
-
                         })
         )
+    }
+
+    fun clearItem() {
+        _imageSearchResultLiveData.postValue(SearchResult(mutableListOf(), null))
     }
 
     private val compositeDisposable by lazy {

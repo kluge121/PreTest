@@ -2,7 +2,7 @@ package com.kakaopay.kakaopaypretest
 
 data class SearchResult(
         var documents: MutableList<ImageItem>,
-        var meta: Meta
+        var meta: Meta?
 
 )
 
