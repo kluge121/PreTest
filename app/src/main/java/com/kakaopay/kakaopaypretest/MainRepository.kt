@@ -13,10 +13,10 @@ class MainRepository {
 
     private val retrofit: Retrofit by lazy {
         Retrofit.Builder()
-            .baseUrl(KAKAO_API_BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .build()
+                .baseUrl(KAKAO_API_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build()
     }
 
     private val service: ImageSearchRetrofitInterface by lazy {
