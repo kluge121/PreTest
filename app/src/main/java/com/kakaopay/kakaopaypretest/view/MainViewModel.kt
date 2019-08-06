@@ -8,6 +8,7 @@ import com.kakaopay.kakaopaypretest.model.MainRepository
 import com.kakaopay.kakaopaypretest.model.SearchResult
 import com.kakaopay.kakaopaypretest.constant.KakaoImageSearchSortEnum
 import com.kakaopay.kakaopaypretest.constant.LoadingState
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -34,25 +35,37 @@ class MainViewModel : ViewModel() {
         MainRepository()
     }
 
+    private fun getSearchSingleImage(
+        query: String,
+        sort: KakaoImageSearchSortEnum,
+        page: Int,
+        size: Int
+    ): Single<SearchResult> {
+        return repository.searchImage(query, sort, page, size)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun searchImage(query: String, sort: KakaoImageSearchSortEnum, page: Int, size: Int) {
         _state.value = LoadingState.LOADING
         this.query = query
         this.page = page
         addDisposable(
-                repository.searchImage(this.query, sort, page, size)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe({
-                            if (it.documents.size == 0) {
-                                _state.value = LoadingState.NOT_FOUND
-                            } else {
-                                isNextPage = it.meta!!.is_end
-                                _state.value = LoadingState.WAIT
-                            }
-                            _imageSearchResultLiveData.value = it
-                        }, {
-                            _state.value = LoadingState.NETWORK_ERROR
-                        })
+            getSearchSingleImage(this.query, sort, page, size)
+                .subscribe({
+                    if (it.documents.size == 0) {
+                        _state.value = LoadingState.NOT_FOUND
+                    } else {
+                        isNextPage = it.meta!!.is_end
+                        _state.value = LoadingState.WAIT
+                    }
+                    _imageSearchResultLiveData.value = it
+                    Log.e("호출1", "${_imageSearchResultLiveData.value!!.documents.size}")
+                    Log.e("호출1-2", "${page}")
+                }, {
+                    Log.e("확인", it.toString())
+                    _state.value = LoadingState.NETWORK_ERROR
+                })
         )
     }
 
@@ -61,26 +74,22 @@ class MainViewModel : ViewModel() {
         _state.value = LoadingState.LOADING
         if (!isNextPage) {
             addDisposable(
-                    repository.searchImage(query, sort, page + 1, size)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe({
-                                isNextPage = it.meta!!.is_end
-                                _state.value = LoadingState.WAIT
-                                val result = _imageSearchResultLiveData.value
-                                result!!.documents.addAll(it.documents)
-                                _imageSearchResultLiveData.value = result
-                                page += 1
-                                Log.e("추가 로딩", "현재 page = ${page}")
-
-                            }, {
-                                _state.value = LoadingState.NETWORK_ERROR
-                            })
+                getSearchSingleImage(this.query, sort, page, size)
+                    .subscribe({
+                        isNextPage = it.meta!!.is_end
+                        _state.value = LoadingState.WAIT
+                        val result = _imageSearchResultLiveData.value
+                        result!!.documents.addAll(it.documents)
+                        _imageSearchResultLiveData.value = result
+                        page += 1
+                        Log.e("호출2", "${_imageSearchResultLiveData.value!!.documents.size}")
+                        Log.e("호출2-2", "${page}")
+                    }, {
+                        _state.value = LoadingState.NETWORK_ERROR
+                    })
             )
         }
-
     }
-
 
     fun clearItem() {
         _imageSearchResultLiveData.postValue(SearchResult(mutableListOf(), null))

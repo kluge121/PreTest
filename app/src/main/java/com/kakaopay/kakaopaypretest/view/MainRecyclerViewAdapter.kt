@@ -10,13 +10,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kakaopay.kakaopaypretest.BR
 import com.kakaopay.kakaopaypretest.model.ImageItem
 import com.kakaopay.kakaopaypretest.R
+import com.kakaopay.kakaopaypretest.constant.MAIN_GRID_COLUMN
 import com.kakaopay.kakaopaypretest.databinding.ItemMainImageBinding
 
 
 class MainRecyclerViewAdapter(screenWidthSize: Int) : RecyclerView.Adapter<BaseImageViewHolder<ImageItem>>() {
 
     private val items = mutableListOf<ImageItem>()
-    private val itemSize = screenWidthSize / 3
+    private val itemSize = screenWidthSize / MAIN_GRID_COLUMN
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseImageViewHolder<ImageItem> {

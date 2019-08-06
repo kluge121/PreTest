@@ -25,9 +25,7 @@ class MainRepository {
     }
 
     fun searchImage(query: String, sort: KakaoImageSearchSortEnum, page: Int, size: Int): Single<SearchResult> {
-        //header query sort page size
         val header = "KakaoAK $KAKAO_REST_KEY"
-
         return service.searchImage(header, URLEncoder.encode(query, "UTF-8"), sort.name, page, size)
     }
 
