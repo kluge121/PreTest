@@ -60,8 +60,6 @@ class MainViewModel : ViewModel() {
                         _state.value = LoadingState.WAIT
                     }
                     _imageSearchResultLiveData.value = it
-                    Log.e("호출1", "${_imageSearchResultLiveData.value!!.documents.size}")
-                    Log.e("호출1-2", "${page}")
                 }, {
                     Log.e("확인", it.toString())
                     _state.value = LoadingState.NETWORK_ERROR
@@ -74,7 +72,7 @@ class MainViewModel : ViewModel() {
         _state.value = LoadingState.LOADING
         if (!isNextPage) {
             addDisposable(
-                getSearchSingleImage(this.query, sort, page, size)
+                getSearchSingleImage(this.query, sort, page + 1, size)
                     .subscribe({
                         isNextPage = it.meta!!.is_end
                         _state.value = LoadingState.WAIT
@@ -82,9 +80,8 @@ class MainViewModel : ViewModel() {
                         result!!.documents.addAll(it.documents)
                         _imageSearchResultLiveData.value = result
                         page += 1
-                        Log.e("호출2", "${_imageSearchResultLiveData.value!!.documents.size}")
-                        Log.e("호출2-2", "${page}")
                     }, {
+                        Log.e("확인", it.toString())
                         _state.value = LoadingState.NETWORK_ERROR
                     })
             )

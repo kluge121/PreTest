@@ -1,5 +1,6 @@
 package com.kakaopay.kakaopaypretest.util
 
+import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.ImageView

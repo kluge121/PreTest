@@ -3,6 +3,7 @@ package com.kakaopay.kakaopaypretest.view
 import android.content.Context
 import android.graphics.Point
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.WindowManager
@@ -66,8 +67,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
-
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
