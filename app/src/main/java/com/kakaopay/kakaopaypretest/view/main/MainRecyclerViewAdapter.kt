@@ -1,5 +1,6 @@
-package com.kakaopay.kakaopaypretest.view
+package com.kakaopay.kakaopaypretest.view.main
 
+import android.content.Intent
 import android.graphics.Rect
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,8 @@ import com.kakaopay.kakaopaypretest.model.ImageItem
 import com.kakaopay.kakaopaypretest.R
 import com.kakaopay.kakaopaypretest.constant.MAIN_GRID_COLUMN
 import com.kakaopay.kakaopaypretest.databinding.ItemMainImageBinding
+import com.kakaopay.kakaopaypretest.view.detail.DetailActivity
+import kotlinx.android.synthetic.main.item_main_image.view.*
 
 
 class MainRecyclerViewAdapter(screenWidthSize: Int) : RecyclerView.Adapter<BaseImageViewHolder<ImageItem>>() {
@@ -58,7 +61,18 @@ abstract class BaseImageViewHolder<T>(binding: ItemMainImageBinding) : RecyclerV
 class NormalImageViewHolder<T>(var binding: ItemMainImageBinding) : BaseImageViewHolder<T>(binding) {
     override fun bindView(item: T) {
         binding.setVariable(BR.item, item)
+        binding.setVariable(BR.holder, this)
     }
+
+    fun showDetailImage(view: View) {
+        val url = (binding.item as ImageItem).image_url
+        val intent = Intent(binding.root.context, DetailActivity::class.java)
+        intent.apply {
+            putExtra("url", url)
+        }
+        binding.root.context.startActivity(intent)
+    }
+
 
 }
 
@@ -70,7 +84,6 @@ class ItemSpaceDecoration : RecyclerView.ItemDecoration() {
         super.getItemOffsets(outRect, view, parent, state)
 
         val edgeSpace = view.context.resources.getDimensionPixelOffset(R.dimen.item_edge_space_size)
-        val betweenSpace = view.context.resources.getDimensionPixelOffset(R.dimen.item_between_space_size)
 
         val position = parent.getChildAdapterPosition(view)
         val lp = view.layoutParams as GridLayoutManager.LayoutParams

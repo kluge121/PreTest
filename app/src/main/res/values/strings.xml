@@ -9,4 +9,5 @@
     <string name="toast_please_input">1글자 이상 입력해주세요</string>
     <string name="not_found">검색 결과가 없습니다.</string>
     <string name="network_error">네트워크 연결을 확인해주세요.</string>
+    <string name="title_activity_detail">DetailActivity</string>
 </resources>

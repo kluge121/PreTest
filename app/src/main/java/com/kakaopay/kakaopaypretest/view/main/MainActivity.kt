@@ -1,9 +1,8 @@
-package com.kakaopay.kakaopaypretest.view
+package com.kakaopay.kakaopaypretest.view.main
 
 import android.content.Context
 import android.graphics.Point
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.WindowManager
@@ -33,11 +32,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        bindInit()
+        initBind()
         initView()
     }
 
-    private fun bindInit() {
+    private fun initBind() {
         mainBinding.vm = mainViewModel
         mainBinding.lifecycleOwner = this
     }
