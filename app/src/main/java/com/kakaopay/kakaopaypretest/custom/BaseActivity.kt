@@ -3,7 +3,6 @@ package com.kakaopay.kakaopaypretest.custom
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
-
 abstract class BaseActivity : AppCompatActivity() {
     private var toast: Toast? = null
     abstract fun initView()

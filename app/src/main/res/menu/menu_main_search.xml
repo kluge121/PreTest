@@ -16,5 +16,4 @@
         app:actionViewClass="com.kakaopay.kakaopaypretest.custom.EmptySubmitSearchView"
         app:showAsAction="collapseActionView|always" />
 
-
 </menu>

@@ -14,6 +14,9 @@ import com.kakaopay.kakaopaypretest.R
 import com.kakaopay.kakaopaypretest.constant.LoadingState
 import com.kakaopay.kakaopaypretest.custom.BaseActivity
 import com.kakaopay.kakaopaypretest.databinding.ActivityDetailBinding
+import android.view.MotionEvent
+import android.view.GestureDetector
+import android.content.Context
 
 
 class DetailActivity : BaseActivity() {
@@ -23,6 +26,7 @@ class DetailActivity : BaseActivity() {
         ViewModelProviders.of(this, ViewModelProvider.AndroidViewModelFactory(application))
                 .get(DetailViewModel::class.java)
     }
+    lateinit var gestureDetector: GestureDetector
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,8 +53,8 @@ class DetailActivity : BaseActivity() {
     }
 
     override fun initView() {
+        gestureDetector = GestureDetector(this, SwipeDetector(this))
     }
-
 
     fun finishActivity(view: View) {
         finish()
@@ -83,7 +87,39 @@ class DetailActivity : BaseActivity() {
         }
     }
 
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        if (gestureDetector.onTouchEvent(ev))
+            return true
+        return super.dispatchTouchEvent(ev)
+    }
 
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        return gestureDetector.onTouchEvent(event)
+    }
+
+}
+
+private class SwipeDetector(val context: Context) : GestureDetector.SimpleOnGestureListener() {
+
+    private val SWIPE_MIN_DISTANCE = 1000
+    private val SWIPE_MAX_OFF_PATH = 250
+    private val SWIPE_THRESHOLD_VELOCITY = 200
+
+    override fun onFling(e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
+
+        if (Math.abs(e1.x - e2.x) > SWIPE_MAX_OFF_PATH)
+            return false
+
+        if (e2.y - e1.y > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
+            (context as DetailActivity).run {
+                finish()
+                overridePendingTransition(R.anim.enter_activity, R.anim.finish_activity)
+            }
+
+            return true
+        }
+        return false
+    }
 }
 
 

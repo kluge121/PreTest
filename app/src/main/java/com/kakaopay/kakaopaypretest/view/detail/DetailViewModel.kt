@@ -82,13 +82,10 @@ class DetailViewModel(application: Application) : AndroidViewModel(application) 
         compositeDisposable.add(disposable)
     }
 
-
     override fun onCleared() {
         super.onCleared()
         compositeDisposable.clear()
-
     }
-
 }
 
 

@@ -15,9 +15,9 @@ abstract class EndlessRecyclerViewScrollListener : RecyclerView.OnScrollListener
         super.onScrolled(recyclerView, dx, dy)
         val layoutManager = recyclerView.layoutManager as GridLayoutManager
 
-        visibleItemCount = layoutManager.getChildCount();
-        totalItemCount = layoutManager.getItemCount();
-        pastVisiblesItems = layoutManager.findFirstVisibleItemPosition();
+        visibleItemCount = layoutManager.childCount
+        totalItemCount = layoutManager.itemCount
+        pastVisiblesItems = layoutManager.findFirstVisibleItemPosition()
 
         if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
             loadMore()

@@ -69,7 +69,6 @@ class MainViewModel : ViewModel() {
         )
     }
 
-
     fun addSearchImage(sort: KakaoImageSearchSortEnum, size: Int) {
         _state.value = LoadingState.LOADING
         if (!isNextPage) {
@@ -94,7 +93,6 @@ class MainViewModel : ViewModel() {
         page = 0
         query = ""
     }
-
 
     private fun addDisposable(disposable: Disposable) {
         compositeDisposable.add(disposable)

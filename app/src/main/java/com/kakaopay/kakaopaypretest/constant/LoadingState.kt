@@ -1,7 +1,5 @@
 package com.kakaopay.kakaopaypretest.constant
 
-
-
 enum class LoadingState {
     WAIT,
     LOADING,

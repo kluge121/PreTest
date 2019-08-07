@@ -53,7 +53,6 @@ class MainRecyclerViewAdapter(screenWidthSize: Int) : RecyclerView.Adapter<BaseI
     }
 }
 
-
 abstract class BaseImageViewHolder<T>(binding: ItemMainImageBinding) : RecyclerView.ViewHolder(binding.root) {
     abstract fun bindView(item: T)
 }
@@ -72,10 +71,7 @@ class NormalImageViewHolder<T>(var binding: ItemMainImageBinding) : BaseImageVie
         }
         binding.root.context.startActivity(intent)
     }
-
-
 }
-
 
 class ItemSpaceDecoration : RecyclerView.ItemDecoration() {
 
@@ -84,12 +80,9 @@ class ItemSpaceDecoration : RecyclerView.ItemDecoration() {
         super.getItemOffsets(outRect, view, parent, state)
 
         val edgeSpace = view.context.resources.getDimensionPixelOffset(R.dimen.item_edge_space_size)
-
         val position = parent.getChildAdapterPosition(view)
         val lp = view.layoutParams as GridLayoutManager.LayoutParams
         val spanIndex = lp.spanIndex
-
-
 
         if (spanIndex == 0) {
             outRect.left = edgeSpace
@@ -106,7 +99,6 @@ class ItemSpaceDecoration : RecyclerView.ItemDecoration() {
         } else {
             outRect.bottom = edgeSpace
         }
-
 
     }
 }

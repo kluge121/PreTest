@@ -6,9 +6,8 @@ import androidx.appcompat.widget.SearchView
 
 class EmptySubmitSearchView : SearchView {
 
-
     lateinit var searchSrcTextView: SearchAutoComplete
-    internal var listener: OnQueryTextListener? = null
+    private var listener: OnQueryTextListener? = null
 
     constructor(context: Context) : super(context) {}
 

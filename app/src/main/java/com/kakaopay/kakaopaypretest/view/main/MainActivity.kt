@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.WindowManager
-import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
@@ -22,8 +21,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : BaseActivity() {
 
     private lateinit var mainBinding: ActivityMainBinding
-    private var toast: Toast? = null
-
     val mainViewModel: MainViewModel by lazy {
         ViewModelProviders.of(this).get(MainViewModel::class.java)
     }
@@ -35,12 +32,10 @@ class MainActivity : BaseActivity() {
         initView()
     }
 
-
     override fun initBind() {
         mainBinding.vm = mainViewModel
         mainBinding.lifecycleOwner = this
     }
-
 
     override fun initView() {
         setSupportActionBar(mainToolbar)
@@ -66,6 +61,7 @@ class MainActivity : BaseActivity() {
                 }
             }
         })
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -81,23 +77,25 @@ class MainActivity : BaseActivity() {
 
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query!!.isNotEmpty() && mainViewModel.state.value != LoadingState.LOADING) {
+                    searchView.clearFocus()
                     mainViewModel.searchImage(
                             query,
                             KakaoImageSearchSortEnum.ACCURACY,
                             DEFAULT_SEARCH_IMAGE_PAGE,
                             DEFAULT_SEARCH_IMAGE_SIZE
                     )
-                } else if (query.isEmpty()) {
+                } else if (query.isEmpty())
+                {
                     showToast(getString(R.string.toast_please_input))
                 }
                 return false
             }
-
             override fun onQueryTextChange(newText: String?): Boolean {
                 return false
             }
         })
 
+        searchView.clearFocus()
 
         return super.onCreateOptionsMenu(menu)
     }
@@ -108,9 +106,8 @@ class MainActivity : BaseActivity() {
             mainViewModel.clearItem()
             showToast(getString(R.string.toast_search_init))
         }
+
         return super.onOptionsItemSelected(item)
     }
-
-
 
 }

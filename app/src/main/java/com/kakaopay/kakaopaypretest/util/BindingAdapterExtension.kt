@@ -1,7 +1,6 @@
 package com.kakaopay.kakaopaypretest.util
 
 import android.graphics.Bitmap
-import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.ImageView
@@ -72,10 +71,6 @@ fun TextView.imageCheck(result: SearchResult, state: LoadingState) {
     }
 }
 
-
-
-
-
 //상세보기 ImageView 바인딩
 @BindingAdapter(value = ["originalImageUrl", "vm"])
 fun ImageView.originalImageUrl(imageUrl: String, vm: DetailViewModel) {
@@ -110,7 +105,6 @@ fun ImageView.originalImageUrl(imageUrl: String, vm: DetailViewModel) {
                 }
             })
 }
-
 
 // progress toggle 설정
 @BindingAdapter("progress")
