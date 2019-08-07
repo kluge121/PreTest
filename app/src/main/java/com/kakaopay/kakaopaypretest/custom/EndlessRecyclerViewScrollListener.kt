@@ -1,6 +1,5 @@
 package com.kakaopay.kakaopaypretest.custom
 
-import android.util.Log
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 

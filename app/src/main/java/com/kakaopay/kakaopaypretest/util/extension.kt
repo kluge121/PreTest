@@ -1,7 +1,6 @@
 package com.kakaopay.kakaopaypretest.util
 
 import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.ImageView
@@ -13,10 +12,9 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.BitmapImageViewTarget
-import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
-import com.kakaopay.kakaopaypretest.*
+import com.kakaopay.kakaopaypretest.R
 import com.kakaopay.kakaopaypretest.constant.LoadingState
 import com.kakaopay.kakaopaypretest.model.SearchResult
 import com.kakaopay.kakaopaypretest.view.detail.DetailViewModel
@@ -48,9 +46,11 @@ fun RecyclerView.bindingItem(result: SearchResult) {
 fun ImageView.loadImage(imageUrl: String) {
     GlideApp.with(this.context)
             .load(imageUrl)
-            .thumbnail(GlideApp.with(this.context)
-                    .load(imageUrl)
-                    .override(200, 200))
+            .thumbnail(
+                    GlideApp.with(this.context)
+                            .load(imageUrl)
+                            .override(200, 200)
+            )
             .centerCrop()
             .override(200, 200)
             .into(this)
@@ -94,12 +94,23 @@ fun ImageView.originalImageUrl(imageUrl: String, vm: DetailViewModel) {
     GlideApp.with(this.context).asBitmap()
             .load(imageUrl)
             .listener(object : RequestListener<Bitmap> {
-                override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap>?, isFirstResource: Boolean): Boolean {
+                override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Bitmap>?,
+                        isFirstResource: Boolean
+                ): Boolean {
                     vm.setStateProgressEnd()
                     return false
                 }
 
-                override fun onResourceReady(resource: Bitmap?, model: Any?, target: Target<Bitmap>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                override fun onResourceReady(
+                        resource: Bitmap?,
+                        model: Any?,
+                        target: Target<Bitmap>?,
+                        dataSource: DataSource?,
+                        isFirstResource: Boolean
+                ): Boolean {
                     vm.setStateProgressEnd()
                     return false
                 }
@@ -118,7 +129,7 @@ fun ImageView.originalImageUrl(imageUrl: String, vm: DetailViewModel) {
 fun ProgressBar.detailToggle(state: LoadingState) {
     if (state == LoadingState.LOADING) {
         this.visibility = VISIBLE
-    } else if (state == LoadingState.WAIT || state == LoadingState.NETWORK_ERROR || state == LoadingState.NOT_FOUND) {
+    } else if (state == LoadingState.WAIT || state == LoadingState.NETWORK_ERROR || state == LoadingState.NOT_FOUND || state == LoadingState.SUCCESS) {
         this.visibility = GONE
     }
 }

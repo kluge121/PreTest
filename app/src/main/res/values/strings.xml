@@ -10,4 +10,9 @@
     <string name="not_found">검색 결과가 없습니다.</string>
     <string name="network_error">네트워크 연결을 확인해주세요.</string>
     <string name="title_activity_detail">DetailActivity</string>
+    <string name="finish_image_btn">finish image btn</string>
+    <string name="file_save_to_gallery">file_save_to_gallery</string>
+    <string name="detail_image_view">detail_image_view</string>
+    <string name="image_save_permission_deny">저장소 권한을 허용하지 않으면 저장할 수 없습니다.</string>
+    <string name="image_save_success">이미지를 저장했습니다.</string>
 </resources>

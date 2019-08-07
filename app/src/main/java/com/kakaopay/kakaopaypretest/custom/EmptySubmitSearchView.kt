@@ -1,8 +1,8 @@
 package com.kakaopay.kakaopaypretest.custom
 
 import android.content.Context
-import androidx.appcompat.widget.SearchView
 import android.util.AttributeSet
+import androidx.appcompat.widget.SearchView
 
 class EmptySubmitSearchView : SearchView {
 

@@ -3,7 +3,8 @@
     package="com.kakaopay.kakaopaypretest">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
 
     <application
         android:allowBackup="true"
@@ -13,10 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity
-            android:name=".view.detail.DetailActivity"
-            android:label="@string/title_activity_detail"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".view.detail.DetailActivity"></activity>
         <activity
             android:name=".view.main.MainActivity"
             android:windowSoftInputMode="adjustPan">

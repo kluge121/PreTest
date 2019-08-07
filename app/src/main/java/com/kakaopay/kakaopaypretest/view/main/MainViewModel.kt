@@ -1,13 +1,12 @@
 package com.kakaopay.kakaopaypretest.view.main
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.kakaopay.kakaopaypretest.model.MainRepository
-import com.kakaopay.kakaopaypretest.model.SearchResult
 import com.kakaopay.kakaopaypretest.constant.KakaoImageSearchSortEnum
 import com.kakaopay.kakaopaypretest.constant.LoadingState
+import com.kakaopay.kakaopaypretest.model.MainRepository
+import com.kakaopay.kakaopaypretest.model.SearchResult
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -16,6 +15,10 @@ import io.reactivex.schedulers.Schedulers
 
 
 class MainViewModel : ViewModel() {
+
+    private val compositeDisposable by lazy {
+        CompositeDisposable()
+    }
 
     private val _imageSearchResultLiveData = MutableLiveData<SearchResult>().apply {
         value = SearchResult(mutableListOf(), null)
@@ -61,7 +64,6 @@ class MainViewModel : ViewModel() {
                             }
                             _imageSearchResultLiveData.value = it
                         }, {
-                            Log.e("확인", it.toString())
                             _state.value = LoadingState.NETWORK_ERROR
                         })
         )
@@ -81,7 +83,6 @@ class MainViewModel : ViewModel() {
                                 _imageSearchResultLiveData.value = result
                                 page += 1
                             }, {
-                                Log.e("확인", it.toString())
                                 _state.value = LoadingState.NETWORK_ERROR
                             })
             )
@@ -94,9 +95,6 @@ class MainViewModel : ViewModel() {
         query = ""
     }
 
-    private val compositeDisposable by lazy {
-        CompositeDisposable()
-    }
 
     private fun addDisposable(disposable: Disposable) {
         compositeDisposable.add(disposable)

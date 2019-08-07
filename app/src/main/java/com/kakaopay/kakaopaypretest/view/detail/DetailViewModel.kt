@@ -1,17 +1,28 @@
 package com.kakaopay.kakaopaypretest.view.detail
 
+import android.app.Application
 import android.graphics.Bitmap
+import android.util.Log
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.kakaopay.kakaopaypretest.R
 import com.kakaopay.kakaopaypretest.constant.LoadingState
+import com.kakaopay.kakaopaypretest.util.BitmapSaver
+import io.reactivex.Maybe
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 
 
-class DetailViewModel : ViewModel() {
+class DetailViewModel(application: Application) : AndroidViewModel(application) {
 
+    private val appContext = application
+    private val compositeDisposable by lazy {
+        CompositeDisposable()
 
+    }
     private val _imageURL = MutableLiveData<String>().apply {
         value = ""
     }
@@ -36,25 +47,45 @@ class DetailViewModel : ViewModel() {
         _state.value = LoadingState.WAIT
     }
 
-    fun setBitmap(bitmap : Bitmap) {
+    fun setBitmap(bitmap: Bitmap) {
         _imageBitmap.value = bitmap
     }
 
 
-    private val compositeDisposable by lazy {
-        CompositeDisposable()
-
+    fun saveImage(): Boolean {
+        if (imageBitmap.value != null && state.value != LoadingState.LOADING) {
+            _state.value = LoadingState.LOADING
+            val observable = Maybe.just(imageBitmap.value)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+            addDisposable(
+                    observable
+                            .subscribe({
+                                _state.value = LoadingState.SUCCESS
+                                BitmapSaver.saveImage(it!!, appContext, appContext.resources.getString(R.string.app_name))
+                            }, {
+                                _state.value = LoadingState.NETWORK_ERROR
+                            })
+            )
+            return true
+        } else if (imageBitmap.value == null) {
+            return false
+        }
+        return false
     }
 
     private fun addDisposable(disposable: Disposable) {
         compositeDisposable.add(disposable)
     }
 
+
     override fun onCleared() {
-        compositeDisposable.clear()
         super.onCleared()
+        compositeDisposable.clear()
+
     }
 
-
 }
+
+
 

@@ -9,12 +9,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kakaopay.kakaopaypretest.BR
-import com.kakaopay.kakaopaypretest.model.ImageItem
 import com.kakaopay.kakaopaypretest.R
 import com.kakaopay.kakaopaypretest.constant.MAIN_GRID_COLUMN
 import com.kakaopay.kakaopaypretest.databinding.ItemMainImageBinding
+import com.kakaopay.kakaopaypretest.model.ImageItem
 import com.kakaopay.kakaopaypretest.view.detail.DetailActivity
-import kotlinx.android.synthetic.main.item_main_image.view.*
 
 
 class MainRecyclerViewAdapter(screenWidthSize: Int) : RecyclerView.Adapter<BaseImageViewHolder<ImageItem>>() {

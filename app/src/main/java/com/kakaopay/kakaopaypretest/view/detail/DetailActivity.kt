@@ -1,10 +1,16 @@
 package com.kakaopay.kakaopaypretest.view.detail
 
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import com.kakaopay.kakaopaypretest.R
+import com.kakaopay.kakaopaypretest.constant.LoadingState
 import com.kakaopay.kakaopaypretest.custom.BaseActivity
 import com.kakaopay.kakaopaypretest.databinding.ActivityDetailBinding
 
@@ -13,7 +19,9 @@ class DetailActivity : BaseActivity() {
 
     private lateinit var detailBinding: ActivityDetailBinding
     private val detailViewModel: DetailViewModel by lazy {
-        ViewModelProviders.of(this).get(DetailViewModel::class.java)
+        ViewModelProviders.of(this, ViewModelProvider.AndroidViewModelFactory(application))
+                .get(DetailViewModel::class.java)
+
     }
 
 
@@ -30,6 +38,13 @@ class DetailActivity : BaseActivity() {
         detailBinding.vm = detailViewModel
         detailBinding.activity = this
         detailBinding.lifecycleOwner = this
+        detailViewModel.state.observe(this, Observer {
+            if (it == LoadingState.SUCCESS) {
+                showToast(getString(R.string.image_save_success))
+            } else if (it == LoadingState.NETWORK_ERROR) {
+                showToast(getString(R.string.network_error))
+            }
+        })
     }
 
     override fun initView() {
@@ -39,7 +54,34 @@ class DetailActivity : BaseActivity() {
         finish()
     }
 
+    fun saveBitmapImage(view: View) {
+        if (detailViewModel.state.value != LoadingState.LOADING) {
+            val permissionCheck =
+                    ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            if (permissionCheck == PackageManager.PERMISSION_DENIED) {
+                ActivityCompat.requestPermissions(
+                        this,
+                        arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                        100
+                )
+            } else {
+                if (!detailViewModel.saveImage()) {
+                    showToast(getString(R.string.network_error))
+                }
+            }
+        }
+    }
 
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 100) {
+            if (grantResults[0] == 0) {
+                detailViewModel.saveImage()
+            } else {
+                showToast(getString(R.string.image_save_permission_deny))
+            }
+        }
+    }
 }
 
 
