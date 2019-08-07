@@ -1,5 +1,6 @@
 package com.kakaopay.kakaopaypretest.util
 
+import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -11,7 +12,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.BitmapImageViewTarget
+import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.target.Target
+import com.bumptech.glide.request.transition.Transition
 import com.kakaopay.kakaopaypretest.*
 import com.kakaopay.kakaopaypretest.constant.LoadingState
 import com.kakaopay.kakaopaypretest.model.SearchResult
@@ -83,29 +87,29 @@ fun TextView.imageCheck(result: SearchResult, state: LoadingState) {
 //
 //}
 
-
 //detail DataBinding Glide
 //상세보기 ImageView 바인딩
 @BindingAdapter(value = ["originalImageUrl", "vm"])
 fun ImageView.originalImageUrl(imageUrl: String, vm: DetailViewModel) {
-    GlideApp.with(this.context)
+    GlideApp.with(this.context).asBitmap()
             .load(imageUrl)
-            .thumbnail(GlideApp.with(this.context)
-                    .load(imageUrl)
-                    .override(200, 200))
-            .listener(object : RequestListener<Drawable> {
-                override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+            .listener(object : RequestListener<Bitmap> {
+                override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap>?, isFirstResource: Boolean): Boolean {
                     vm.setStateProgressEnd()
                     return false
                 }
 
-                override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                override fun onResourceReady(resource: Bitmap?, model: Any?, target: Target<Bitmap>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
                     vm.setStateProgressEnd()
                     return false
                 }
             })
-
-            .into(this)
+            .into(object : BitmapImageViewTarget(this) {
+                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                    super.onResourceReady(resource, transition)
+                    vm.setBitmap(resource)
+                }
+            })
 }
 
 // progress toggle

@@ -36,6 +36,11 @@ class DetailViewModel : ViewModel() {
         _state.value = LoadingState.WAIT
     }
 
+    fun setBitmap(bitmap : Bitmap) {
+        _imageBitmap.value = bitmap
+    }
+
+
     private val compositeDisposable by lazy {
         CompositeDisposable()
 
