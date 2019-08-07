@@ -27,6 +27,7 @@ class MainRecyclerViewAdapter(screenWidthSize: Int) : RecyclerView.Adapter<BaseI
         val binding: ItemMainImageBinding =
                 DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_main_image, parent, false)
 
+        //하나의 아이템 크기 = 디바이스 가로 길이를 MAIN_GRID_COLUMN 로 나눈 값 (현재 = 3)
         val param = (binding.root as ViewGroup).getChildAt(0).layoutParams
         param.height = itemSize
         param.width = itemSize

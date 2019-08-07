@@ -1,5 +1,6 @@
 package com.kakaopay.kakaopaypretest.view.detail
 
+import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -20,6 +21,11 @@ class DetailViewModel : ViewModel() {
         value = LoadingState.LOADING
     }
     val state: LiveData<LoadingState> get() = _state
+
+    private val _imageBitmap = MutableLiveData<Bitmap?>().apply {
+        value = null
+    }
+    val imageBitmap: LiveData<Bitmap?> get() = _imageBitmap
 
 
     fun setLiveDataImageURL(url: String) {

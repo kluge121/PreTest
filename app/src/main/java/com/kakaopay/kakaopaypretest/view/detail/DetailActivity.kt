@@ -5,13 +5,14 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
+import com.kakaopay.kakaopaypretest.custom.BaseActivity
 import com.kakaopay.kakaopaypretest.databinding.ActivityDetailBinding
 
 
-class DetailActivity : AppCompatActivity() {
+class DetailActivity : BaseActivity() {
 
-    lateinit var detailBinding: ActivityDetailBinding
-    val detailViewModel: DetailViewModel by lazy {
+    private lateinit var detailBinding: ActivityDetailBinding
+    private val detailViewModel: DetailViewModel by lazy {
         ViewModelProviders.of(this).get(DetailViewModel::class.java)
     }
 
@@ -23,7 +24,7 @@ class DetailActivity : AppCompatActivity() {
         initView()
     }
 
-    private fun initBind() {
+    override fun initBind() {
         val imageURL = intent.getStringExtra("url") as String
         detailViewModel.setLiveDataImageURL(imageURL)
         detailBinding.vm = detailViewModel
@@ -31,7 +32,7 @@ class DetailActivity : AppCompatActivity() {
         detailBinding.lifecycleOwner = this
     }
 
-    private fun initView() {
+    override fun initView() {
     }
 
     fun finishActivity(view: View) {

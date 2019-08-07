@@ -14,16 +14,16 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import com.kakaopay.kakaopaypretest.R
 import com.kakaopay.kakaopaypretest.constant.*
+import com.kakaopay.kakaopaypretest.custom.BaseActivity
 import com.kakaopay.kakaopaypretest.custom.EndlessRecyclerViewScrollListener
 import com.kakaopay.kakaopaypretest.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
-
-    lateinit var mainBinding: ActivityMainBinding
-    var toast: Toast? = null
+    private lateinit var mainBinding: ActivityMainBinding
+    private var toast: Toast? = null
 
     val mainViewModel: MainViewModel by lazy {
         ViewModelProviders.of(this).get(MainViewModel::class.java)
@@ -36,13 +36,14 @@ class MainActivity : AppCompatActivity() {
         initView()
     }
 
-    private fun initBind() {
+
+    override fun initBind() {
         mainBinding.vm = mainViewModel
         mainBinding.lifecycleOwner = this
     }
 
 
-    private fun initView() {
+    override fun initView() {
         setSupportActionBar(mainToolbar)
         supportActionBar!!.title = resources.getString(R.string.name)
         val wm = getSystemService(Context.WINDOW_SERVICE) as WindowManager
@@ -80,12 +81,12 @@ class MainActivity : AppCompatActivity() {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
             override fun onQueryTextSubmit(query: String?): Boolean {
-                if (query!!.isNotEmpty() && mainViewModel.state.value != LoadingState.LOADING ) {
+                if (query!!.isNotEmpty() && mainViewModel.state.value != LoadingState.LOADING) {
                     mainViewModel.searchImage(
-                        query,
-                        KakaoImageSearchSortEnum.ACCURACY,
-                        DEFAULT_SEARCH_IMAGE_PAGE,
-                        DEFAULT_SEARCH_IMAGE_SIZE
+                            query,
+                            KakaoImageSearchSortEnum.ACCURACY,
+                            DEFAULT_SEARCH_IMAGE_PAGE,
+                            DEFAULT_SEARCH_IMAGE_SIZE
                     )
                 } else if (query.isEmpty()) {
                     showToast(getString(R.string.toast_please_input))
@@ -111,13 +112,6 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun showToast(msg: String) {
-        if (toast == null) {
-            toast = Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT)
-        } else {
-            toast!!.setText(msg)
-        }
-        toast?.show()
-    }
+
 
 }
