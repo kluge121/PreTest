@@ -101,9 +101,9 @@ class DetailActivity : BaseActivity() {
 
 private class SwipeDetector(val context: Context) : GestureDetector.SimpleOnGestureListener() {
 
-    private val SWIPE_MIN_DISTANCE = 1000
+    private val SWIPE_MIN_DISTANCE = 800
     private val SWIPE_MAX_OFF_PATH = 250
-    private val SWIPE_THRESHOLD_VELOCITY = 200
+    private val SWIPE_THRESHOLD_VELOCITY = 300
 
     override fun onFling(e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
 
