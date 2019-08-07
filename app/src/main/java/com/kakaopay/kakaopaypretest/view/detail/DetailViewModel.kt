@@ -2,7 +2,6 @@ package com.kakaopay.kakaopaypretest.view.detail
 
 import android.app.Application
 import android.graphics.Bitmap
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -43,8 +42,12 @@ class DetailViewModel(application: Application) : AndroidViewModel(application) 
         _imageURL.postValue(url)
     }
 
-    fun setStateProgressEnd() {
+    fun setStateWait() {
         _state.value = LoadingState.WAIT
+    }
+
+    fun setStateNotExit() {
+        _state.value = LoadingState.NOT_EXIST
     }
 
     fun setBitmap(bitmap: Bitmap) {
@@ -69,6 +72,7 @@ class DetailViewModel(application: Application) : AndroidViewModel(application) 
             )
             return true
         } else if (imageBitmap.value == null) {
+            _state.value = LoadingState.NOT_EXIST
             return false
         }
         return false

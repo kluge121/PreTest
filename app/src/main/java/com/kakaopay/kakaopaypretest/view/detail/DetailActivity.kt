@@ -3,6 +3,7 @@ package com.kakaopay.kakaopaypretest.view.detail
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -21,13 +22,11 @@ class DetailActivity : BaseActivity() {
     private val detailViewModel: DetailViewModel by lazy {
         ViewModelProviders.of(this, ViewModelProvider.AndroidViewModelFactory(application))
                 .get(DetailViewModel::class.java)
-
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        detailBinding = DataBindingUtil.setContentView(this, com.kakaopay.kakaopaypretest.R.layout.activity_detail)
+        detailBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail)
         initBind()
         initView()
     }
@@ -43,12 +42,15 @@ class DetailActivity : BaseActivity() {
                 showToast(getString(R.string.image_save_success))
             } else if (it == LoadingState.NETWORK_ERROR) {
                 showToast(getString(R.string.network_error))
+            } else if (it == LoadingState.NOT_EXIST) {
+                Toast.makeText(applicationContext, getString(R.string.image_not_exist), Toast.LENGTH_SHORT).show()
             }
         })
     }
 
     override fun initView() {
     }
+
 
     fun finishActivity(view: View) {
         finish()
@@ -65,9 +67,7 @@ class DetailActivity : BaseActivity() {
                         100
                 )
             } else {
-                if (!detailViewModel.saveImage()) {
-                    showToast(getString(R.string.network_error))
-                }
+                detailViewModel.saveImage()
             }
         }
     }
@@ -82,7 +82,11 @@ class DetailActivity : BaseActivity() {
             }
         }
     }
+
+
 }
+
+
 
 
 

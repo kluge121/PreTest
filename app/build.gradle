@@ -45,6 +45,8 @@ dependencies {
     //UI
     implementation "androidx.recyclerview:recyclerview:1.0.0"
     implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'com.github.chrisbanes:PhotoView:2.3.0'
+
 
     //glide
     implementation 'com.github.bumptech.glide:glide:4.9.0'

@@ -52,10 +52,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
+        <com.github.chrisbanes.photoview.PhotoView
             android:id="@+id/detailImage"
             originalImageUrl="@{vm.imageURL}"
             vm="@{vm}"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:contentDescription="@string/detail_image_view"

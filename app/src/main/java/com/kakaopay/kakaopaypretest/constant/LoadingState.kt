@@ -7,6 +7,7 @@ enum class LoadingState {
     LOADING,
     NOT_FOUND,
     NETWORK_ERROR,
-    SUCCESS
+    SUCCESS,
+    NOT_EXIST
 }
 

@@ -1,6 +1,7 @@
 package com.kakaopay.kakaopaypretest.util
 
 import android.graphics.Bitmap
+import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.ImageView
@@ -21,7 +22,6 @@ import com.kakaopay.kakaopaypretest.view.detail.DetailViewModel
 import com.kakaopay.kakaopaypretest.view.main.MainRecyclerViewAdapter
 
 
-//main RecyclerView Adapter item , 의존성 주입 대체?
 //검색 결과의 리스트 RecyclerView Adapter list에 제공
 @BindingAdapter("items")
 fun RecyclerView.bindingItem(result: SearchResult) {
@@ -40,7 +40,6 @@ fun RecyclerView.bindingItem(result: SearchResult) {
     }
 }
 
-//main DataBinding Glide
 //검색결과 이미지뷰 바인딩
 @BindingAdapter("glideImageUrl")
 fun ImageView.loadImage(imageUrl: String) {
@@ -56,7 +55,6 @@ fun ImageView.loadImage(imageUrl: String) {
             .into(this)
 }
 
-//main TextView search do it!
 //메인 상태 메시지 바인딩
 @BindingAdapter(value = ["result", "progress"])
 fun TextView.imageCheck(result: SearchResult, state: LoadingState) {
@@ -75,19 +73,9 @@ fun TextView.imageCheck(result: SearchResult, state: LoadingState) {
 }
 
 
-//main progress toggle
-//메인 Progress 바인딩
-//@BindingAdapter("progress")
-//fun ProgressBar.toggle(state: LoadingState) {
-//    if (state == LoadingState.LOADING) {
-//        this.visibility = VISIBLE
-//    } else if (state == LoadingState.WAIT || state == LoadingState.NETWORK_ERROR || state == LoadingState.NOT_FOUND) {
-//        this.visibility = GONE
-//    }
-//
-//}
 
-//detail DataBinding Glide
+
+
 //상세보기 ImageView 바인딩
 @BindingAdapter(value = ["originalImageUrl", "vm"])
 fun ImageView.originalImageUrl(imageUrl: String, vm: DetailViewModel) {
@@ -100,7 +88,7 @@ fun ImageView.originalImageUrl(imageUrl: String, vm: DetailViewModel) {
                         target: Target<Bitmap>?,
                         isFirstResource: Boolean
                 ): Boolean {
-                    vm.setStateProgressEnd()
+                    vm.setStateNotExit()
                     return false
                 }
 
@@ -111,7 +99,7 @@ fun ImageView.originalImageUrl(imageUrl: String, vm: DetailViewModel) {
                         dataSource: DataSource?,
                         isFirstResource: Boolean
                 ): Boolean {
-                    vm.setStateProgressEnd()
+                    vm.setStateWait()
                     return false
                 }
             })
@@ -123,13 +111,13 @@ fun ImageView.originalImageUrl(imageUrl: String, vm: DetailViewModel) {
             })
 }
 
-// progress toggle
-// Progress
+
+// progress toggle 설정
 @BindingAdapter("progress")
 fun ProgressBar.detailToggle(state: LoadingState) {
     if (state == LoadingState.LOADING) {
         this.visibility = VISIBLE
-    } else if (state == LoadingState.WAIT || state == LoadingState.NETWORK_ERROR || state == LoadingState.NOT_FOUND || state == LoadingState.SUCCESS) {
+    } else if (state == LoadingState.WAIT || state == LoadingState.NETWORK_ERROR || state == LoadingState.NOT_FOUND || state == LoadingState.SUCCESS || state == LoadingState.NOT_EXIST) {
         this.visibility = GONE
     }
 }
