@@ -1,7 +1,15 @@
 package com.kakaopay.kakaopaypretest.view.detail
 
+import android.app.AlertDialog
+import android.content.Context
+import android.content.DialogInterface
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
+import android.view.GestureDetector
+import android.view.MotionEvent
 import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -14,9 +22,6 @@ import com.kakaopay.kakaopaypretest.R
 import com.kakaopay.kakaopaypretest.constant.LoadingState
 import com.kakaopay.kakaopaypretest.custom.BaseActivity
 import com.kakaopay.kakaopaypretest.databinding.ActivityDetailBinding
-import android.view.MotionEvent
-import android.view.GestureDetector
-import android.content.Context
 import kotlin.math.abs
 
 
@@ -77,16 +82,37 @@ class DetailActivity : BaseActivity() {
         }
     }
 
+
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == 100) {
             if (grantResults[0] == 0) {
                 detailViewModel.saveImage()
             } else {
-                showToast(getString(R.string.image_save_permission_deny))
+                showPermissionDialog()
             }
         }
     }
+
+
+    private fun showPermissionDialog() {
+        AlertDialog.Builder(this).apply {
+            title = getString(R.string.dialog_title_permission_request)
+            setMessage(getString(R.string.need_permission_msg))
+            setPositiveButton(getString(R.string.go_to_permission_set)
+            ) { dialogInterface, diaglogInt ->
+
+                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                        .setData(Uri.parse("package:$packageName"))
+                startActivity(intent)
+            }
+            setNegativeButton(getString(R.string.msg_cancel)) { dialogInterface, diaglogInt ->
+                showToast(getString(R.string.image_save_permission_deny))
+            }
+        }.create().show()
+
+    }
+
 
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
         if (gestureDetector.onTouchEvent(ev))

@@ -17,4 +17,8 @@
     <string name="image_save_success">이미지를 저장했습니다.</string>
     <string name="image_not_exist">이미지 리소스가 존재하지 않습니다.</string>
     <string name="search_item">search_item</string>
+    <string name="dialog_title_permission_request">권한 요청</string>
+    <string name="need_permission_msg">해당 기능은 사용자의 Storage 권한 수락이 필요합니다.</string>
+    <string name="go_to_permission_set">권한 설정하러 가기</string>
+    <string name="msg_cancel">취소하기</string>
 </resources>

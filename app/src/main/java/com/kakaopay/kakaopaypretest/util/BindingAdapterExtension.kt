@@ -111,7 +111,8 @@ fun ImageView.originalImageUrl(imageUrl: String, vm: DetailViewModel) {
 fun ProgressBar.detailToggle(state: LoadingState) {
     if (state == LoadingState.LOADING) {
         this.visibility = VISIBLE
-    } else if (state == LoadingState.WAIT || state == LoadingState.NETWORK_ERROR || state == LoadingState.NOT_FOUND || state == LoadingState.SUCCESS || state == LoadingState.NOT_EXIST) {
+    } else if (state == LoadingState.WAIT || state == LoadingState.NETWORK_ERROR ||
+            state == LoadingState.NOT_FOUND || state == LoadingState.SUCCESS || state == LoadingState.NOT_EXIST) {
         this.visibility = GONE
     }
 }
