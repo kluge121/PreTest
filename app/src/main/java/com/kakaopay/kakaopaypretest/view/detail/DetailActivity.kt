@@ -17,6 +17,7 @@ import com.kakaopay.kakaopaypretest.databinding.ActivityDetailBinding
 import android.view.MotionEvent
 import android.view.GestureDetector
 import android.content.Context
+import kotlin.math.abs
 
 
 class DetailActivity : BaseActivity() {
@@ -107,7 +108,7 @@ private class SwipeDetector(val context: Context) : GestureDetector.SimpleOnGest
 
     override fun onFling(e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
 
-        if (Math.abs(e1.x - e2.x) > SWIPE_MAX_OFF_PATH)
+        if (abs(e1.x - e2.x) > SWIPE_MAX_OFF_PATH)
             return false
 
         if (e2.y - e1.y > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
