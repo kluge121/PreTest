@@ -2,7 +2,6 @@ package com.kakaopay.kakaopaypretest.view.detail
 
 import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -30,7 +29,7 @@ class DetailActivity : BaseActivity() {
     private lateinit var detailBinding: ActivityDetailBinding
     private val detailViewModel: DetailViewModel by lazy {
         ViewModelProviders.of(this, ViewModelProvider.AndroidViewModelFactory(application))
-                .get(DetailViewModel::class.java)
+            .get(DetailViewModel::class.java)
     }
     lateinit var gestureDetector: GestureDetector
 
@@ -46,6 +45,7 @@ class DetailActivity : BaseActivity() {
         detailViewModel.setLiveDataImageURL(imageURL)
         detailBinding.vm = detailViewModel
         detailBinding.activity = this
+        detailBinding.lifecycleOwner = this
         detailViewModel.state.observe(this, Observer {
             if (it == LoadingState.SUCCESS) {
                 showToast(getString(R.string.image_save_success))
@@ -68,12 +68,12 @@ class DetailActivity : BaseActivity() {
     fun saveBitmapImage(view: View) {
         if (detailViewModel.state.value != LoadingState.LOADING) {
             val permissionCheck =
-                    ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
             if (permissionCheck == PackageManager.PERMISSION_DENIED) {
                 ActivityCompat.requestPermissions(
-                        this,
-                        arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                        100
+                    this,
+                    arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                    100
                 )
             } else {
                 detailViewModel.saveImage()
@@ -98,11 +98,12 @@ class DetailActivity : BaseActivity() {
         AlertDialog.Builder(this).apply {
             title = getString(R.string.dialog_title_permission_request)
             setMessage(getString(R.string.need_permission_msg))
-            setPositiveButton(getString(R.string.go_to_permission_set)
+            setPositiveButton(
+                getString(R.string.go_to_permission_set)
             ) { dialogInterface, diaglogInt ->
 
                 val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                        .setData(Uri.parse("package:$packageName"))
+                    .setData(Uri.parse("package:$packageName"))
                 startActivity(intent)
             }
             setNegativeButton(getString(R.string.msg_cancel)) { dialogInterface, diaglogInt ->
@@ -128,10 +129,13 @@ class DetailActivity : BaseActivity() {
 private class SwipeDetector(val context: Context) : GestureDetector.SimpleOnGestureListener() {
 
     private val SWIPE_MIN_DISTANCE = 800
+    private val X_AXIS_MAX_ALLOW_DISTANCE = 250
     private val SWIPE_THRESHOLD_VELOCITY = 300
 
     override fun onFling(e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
 
+        if (abs(e1.x - e2.x) > X_AXIS_MAX_ALLOW_DISTANCE)
+            return false
 
         if (e2.y - e1.y > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
             (context as DetailActivity).run {
