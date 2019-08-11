@@ -73,6 +73,7 @@ class NormalImageViewHolder<T>(var binding: ItemMainImageBinding) : BaseImageVie
         val intent = Intent(binding.root.context, DetailActivity::class.java)
         intent.apply {
             putExtra("url", url)
+            putExtra("position", adapterPosition)
         }
         binding.root.context.startActivity(intent)
     }
