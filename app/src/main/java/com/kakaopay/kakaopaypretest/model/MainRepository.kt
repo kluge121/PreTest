@@ -15,7 +15,8 @@ class MainRepository {
 
     fun searchImage(query: String, sort: KakaoImageSearchSortEnum, page: Int, size: Int): Single<SearchResult> {
         val header = "KakaoAK $KAKAO_REST_KEY"
-        return RetrofitProvider.getSearchService().searchImage(header, URLEncoder.encode(query, "UTF-8"), sort.name, page, size)
+        return RetrofitProvider.getSearchService()
+            .searchImage(header, URLEncoder.encode(query, "UTF-8"), sort.name, page, size)
     }
 
 
