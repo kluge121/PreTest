@@ -70,6 +70,42 @@ fun TextView.imageCheck(result: SearchResult, state: LoadingState) {
         this.visibility = VISIBLE
     }
 }
+//
+////상세보기 ImageView 바인딩
+//@BindingAdapter(value = ["originalImageUrl", "vm"])
+//fun ImageView.originalImageUrl(imageUrl: String, vm: DetailViewModel) {
+//    GlideApp.with(this.context).asBitmap()
+//            .load(imageUrl)
+//            .listener(object : RequestListener<Bitmap> {
+//                override fun onLoadFailed(
+//                        e: GlideException?,
+//                        model: Any?,
+//                        target: Target<Bitmap>?,
+//                        isFirstResource: Boolean
+//                ): Boolean {
+//                    vm.setStateNotExit()
+//                    return false
+//                }
+//
+//                override fun onResourceReady(
+//                        resource: Bitmap?,
+//                        model: Any?,
+//                        target: Target<Bitmap>?,
+//                        dataSource: DataSource?,
+//                        isFirstResource: Boolean
+//                ): Boolean {
+//                    vm.setStateWait()
+//                    return false
+//                }
+//            })
+//            .into(object : BitmapImageViewTarget(this) {
+//                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+//                    super.onResourceReady(resource, transition)
+//                    vm.setBitmap(resource)
+//                }
+//            })
+//}
+
 
 //상세보기 ImageView 바인딩
 @BindingAdapter(value = ["originalImageUrl", "vm"])
@@ -105,6 +141,7 @@ fun ImageView.originalImageUrl(imageUrl: String, vm: DetailViewModel) {
                 }
             })
 }
+
 
 // progress toggle 설정
 @BindingAdapter("progress")
