@@ -60,7 +60,7 @@ class MainViewModel : ViewModel() {
                                 _state.value = LoadingState.NOT_FOUND
                             } else {
                                 isEndPage = it.meta!!.is_end
-                                _state.value = LoadingState.WAIT
+                                _state.value = LoadingState.SUCCESS
                             }
                             _imageSearchResultLiveData.value = it
                         }, {
@@ -76,7 +76,7 @@ class MainViewModel : ViewModel() {
                     getSearchSingleImage(this.query, sort, page + 1, size)
                             .subscribe({
                                 isEndPage = it.meta!!.is_end
-                                _state.value = LoadingState.WAIT
+                                _state.value = LoadingState.SUCCESS
                                 val result = _imageSearchResultLiveData.value
                                 result!!.documents.addAll(it.documents)
                                 _imageSearchResultLiveData.value = result

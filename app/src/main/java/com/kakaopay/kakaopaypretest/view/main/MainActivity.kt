@@ -96,7 +96,6 @@ class MainActivity : BaseActivity() {
         })
 
         searchView.clearFocus()
-
         return super.onCreateOptionsMenu(menu)
     }
 

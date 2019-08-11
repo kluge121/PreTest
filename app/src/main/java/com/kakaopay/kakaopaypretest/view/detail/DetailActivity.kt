@@ -128,7 +128,7 @@ class DetailActivity : BaseActivity() {
 
 private class SwipeDetector(val context: Context) : GestureDetector.SimpleOnGestureListener() {
 
-    private val SWIPE_MIN_DISTANCE = 800
+    private val SWIPE_MIN_DISTANCE = 700
     private val X_AXIS_MAX_ALLOW_DISTANCE = 250
     private val SWIPE_THRESHOLD_VELOCITY = 300
 
@@ -137,12 +137,11 @@ private class SwipeDetector(val context: Context) : GestureDetector.SimpleOnGest
         if (abs(e1.x - e2.x) > X_AXIS_MAX_ALLOW_DISTANCE)
             return false
 
-        if (e2.y - e1.y > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
+        if (e2.y - e1.y > SWIPE_MIN_DISTANCE && abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
             (context as DetailActivity).run {
                 finish()
                 overridePendingTransition(R.anim.enter_activity, R.anim.finish_activity)
             }
-
             return true
         }
         return false
