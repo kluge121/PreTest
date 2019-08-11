@@ -92,6 +92,7 @@ class MainViewModel : ViewModel() {
         _imageSearchResultLiveData.postValue(SearchResult(mutableListOf(), null))
         page = 0
         query = ""
+        _state.value = LoadingState.WAIT
     }
 
     private fun addDisposable(disposable: Disposable) {
