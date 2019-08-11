@@ -32,7 +32,7 @@ class MainViewModel : ViewModel() {
 
     private var page: Int = 0
     private var query: String = ""
-    private var isNextPage: Boolean = false
+    private var isEndPage: Boolean = false
 
     private val repository: MainRepository by lazy {
         MainRepository()
@@ -59,7 +59,7 @@ class MainViewModel : ViewModel() {
                             if (it.documents.size == 0) {
                                 _state.value = LoadingState.NOT_FOUND
                             } else {
-                                isNextPage = it.meta!!.is_end
+                                isEndPage = it.meta!!.is_end
                                 _state.value = LoadingState.WAIT
                             }
                             _imageSearchResultLiveData.value = it
@@ -71,11 +71,11 @@ class MainViewModel : ViewModel() {
 
     fun addSearchImage(sort: KakaoImageSearchSortEnum, size: Int) {
         _state.value = LoadingState.LOADING
-        if (!isNextPage) {
+        if (!isEndPage) {
             addDisposable(
                     getSearchSingleImage(this.query, sort, page + 1, size)
                             .subscribe({
-                                isNextPage = it.meta!!.is_end
+                                isEndPage = it.meta!!.is_end
                                 _state.value = LoadingState.WAIT
                                 val result = _imageSearchResultLiveData.value
                                 result!!.documents.addAll(it.documents)

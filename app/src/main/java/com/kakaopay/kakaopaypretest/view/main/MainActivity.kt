@@ -34,7 +34,6 @@ class MainActivity : BaseActivity() {
 
     override fun initBind() {
         mainBinding.vm = mainViewModel
-        mainBinding.lifecycleOwner = this
     }
 
     override fun initView() {

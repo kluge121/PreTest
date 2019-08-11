@@ -21,17 +21,21 @@ object BitmapSaver {
 
         //API29 분기
         if (android.os.Build.VERSION.SDK_INT >= 29) {
+
             val values = contentValues()
             values.put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/$folderName")
             values.put(MediaStore.Images.Media.IS_PENDING, true)
+
             val uri: Uri? = context.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+
             if (uri != null) {
                 saveImageToStream(bitmap, context.contentResolver.openOutputStream(uri))
                 values.put(MediaStore.Images.Media.IS_PENDING, false)
                 context.contentResolver.update(uri, values, null, null)
             }
+
         } else {
-            //api29 deprecate, <29
+            //api29 deprecate, < 29
             val directory = File(Environment.getExternalStorageDirectory().toString() + File.separator + folderName)
             if (!directory.exists()) {
                 directory.mkdirs()

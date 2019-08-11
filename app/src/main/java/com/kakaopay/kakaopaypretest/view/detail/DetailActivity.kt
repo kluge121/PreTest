@@ -46,7 +46,6 @@ class DetailActivity : BaseActivity() {
         detailViewModel.setLiveDataImageURL(imageURL)
         detailBinding.vm = detailViewModel
         detailBinding.activity = this
-        detailBinding.lifecycleOwner = this
         detailViewModel.state.observe(this, Observer {
             if (it == LoadingState.SUCCESS) {
                 showToast(getString(R.string.image_save_success))
@@ -129,13 +128,10 @@ class DetailActivity : BaseActivity() {
 private class SwipeDetector(val context: Context) : GestureDetector.SimpleOnGestureListener() {
 
     private val SWIPE_MIN_DISTANCE = 800
-    private val SWIPE_MAX_OFF_PATH = 250
     private val SWIPE_THRESHOLD_VELOCITY = 300
 
     override fun onFling(e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
 
-        if (abs(e1.x - e2.x) > SWIPE_MAX_OFF_PATH)
-            return false
 
         if (e2.y - e1.y > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
             (context as DetailActivity).run {
