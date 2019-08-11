@@ -1,6 +1,7 @@
 package com.kakaopay.kakaopaypretest.util
 
 import android.graphics.Bitmap
+import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.ImageView
@@ -19,7 +20,9 @@ import com.kakaopay.kakaopaypretest.constant.LoadingState
 import com.kakaopay.kakaopaypretest.model.SearchResult
 import com.kakaopay.kakaopaypretest.view.detail.DetailViewModel
 import com.kakaopay.kakaopaypretest.view.main.MainRecyclerViewAdapter
+import java.net.URI
 import java.net.URLDecoder
+import java.net.URLEncoder
 
 
 //검색 결과의 리스트 RecyclerView Adapter list에 제공
@@ -71,47 +74,13 @@ fun TextView.imageCheck(result: SearchResult, state: LoadingState) {
         this.visibility = VISIBLE
     }
 }
-//
-////상세보기 ImageView 바인딩
-//@BindingAdapter(value = ["originalImageUrl", "vm"])
-//fun ImageView.originalImageUrl(imageUrl: String, vm: DetailViewModel) {
-//    GlideApp.with(this.context).asBitmap()
-//            .load(imageUrl)
-//            .listener(object : RequestListener<Bitmap> {
-//                override fun onLoadFailed(
-//                        e: GlideException?,
-//                        model: Any?,
-//                        target: Target<Bitmap>?,
-//                        isFirstResource: Boolean
-//                ): Boolean {
-//                    vm.setStateNotExit()
-//                    return false
-//                }
-//
-//                override fun onResourceReady(
-//                        resource: Bitmap?,
-//                        model: Any?,
-//                        target: Target<Bitmap>?,
-//                        dataSource: DataSource?,
-//                        isFirstResource: Boolean
-//                ): Boolean {
-//                    vm.setStateWait()
-//                    return false
-//                }
-//            })
-//            .into(object : BitmapImageViewTarget(this) {
-//                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-//                    super.onResourceReady(resource, transition)
-//                    vm.setBitmap(resource)
-//                }
-//            })
-//}
-
 
 //상세보기 ImageView 바인딩
 @BindingAdapter(value = ["originalImageUrl", "vm"])
 fun ImageView.originalImageUrl(imageUrl: String, vm: DetailViewModel) {
-    val decodeURL = URLDecoder.decode(imageUrl, "UTF-8")
+
+    val decodeURL = URLDecoder.decode(imageUrl, "UTF-8").replace("&","%26")
+
     GlideApp.with(this.context).asBitmap()
         .load(decodeURL)
         .listener(object : RequestListener<Bitmap> {
