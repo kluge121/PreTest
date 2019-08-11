@@ -24,18 +24,20 @@ class MainRecyclerViewAdapter(screenWidthSize: Int) : RecyclerView.Adapter<BaseI
 
     private val items = mutableListOf<ImageItem>()
     private val itemSize = screenWidthSize / MAIN_GRID_COLUMN
-
+    private lateinit var query: String
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseImageViewHolder<ImageItem> {
 
         val binding: ItemMainImageBinding =
-                DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_main_image, parent, false)
+            DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_main_image, parent, false)
 
         //하나의 아이템 크기 = 디바이스 가로 길이를 MAIN_GRID_COLUMN 로 나눈 값 (현재 = 3)
         val param = (binding.root as ViewGroup).getChildAt(0).layoutParams
         param.height = itemSize
         param.width = itemSize
         (binding.root as ViewGroup).getChildAt(0).layoutParams = param
+        binding.root.setTag(R.id.holder_query_tag, query)
+        binding.root.setTag(R.id.holder_items, items as ArrayList<ImageItem>)
         return NormalImageViewHolder(binding)
 
     }
@@ -51,6 +53,11 @@ class MainRecyclerViewAdapter(screenWidthSize: Int) : RecyclerView.Adapter<BaseI
     fun replaceAll(newItem: MutableList<ImageItem>) {
         items.clear()
         items.addAll(newItem)
+
+    }
+
+    fun setQuery(query: String) {
+        this.query = query
     }
 
     override fun getItemId(position: Int): Long {
@@ -74,6 +81,8 @@ class NormalImageViewHolder<T>(var binding: ItemMainImageBinding) : BaseImageVie
         intent.apply {
             putExtra("url", url)
             putExtra("position", adapterPosition)
+            putExtra("query", binding.root.getTag(R.id.holder_query_tag) as String)
+            putParcelableArrayListExtra("items", binding.root.getTag(R.id.holder_items) as ArrayList<ImageItem>)
         }
         binding.root.context.startActivity(intent)
     }

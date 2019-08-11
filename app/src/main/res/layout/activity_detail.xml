@@ -51,12 +51,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.github.chrisbanes.photoview.PhotoView
+        <androidx.viewpager.widget.ViewPager
             android:id="@+id/detailImage"
-            originalImageUrl="@{vm.imageURL}"
-            vm="@{vm}"
             android:scaleType="fitCenter"
-            android:adjustViewBounds="true"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:contentDescription="@string/detail_image_view"

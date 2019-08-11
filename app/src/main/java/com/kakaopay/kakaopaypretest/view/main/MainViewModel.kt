@@ -1,6 +1,5 @@
 package com.kakaopay.kakaopaypretest.view.main
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -31,8 +30,8 @@ class MainViewModel : ViewModel() {
     }
     val state: LiveData<LoadingState> get() = _state
 
+    var query: String = ""
     private var page: Int = 0
-    private var query: String = ""
     private var isEndPage: Boolean = false
 
     private val repository: MainRepository by lazy {

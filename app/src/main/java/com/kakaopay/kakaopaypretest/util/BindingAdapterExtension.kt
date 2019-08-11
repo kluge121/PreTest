@@ -26,13 +26,14 @@ import java.net.URLEncoder
 
 
 //검색 결과의 리스트 RecyclerView Adapter list에 제공
-@BindingAdapter("items")
-fun RecyclerView.bindingItem(result: SearchResult) {
+@BindingAdapter(value = ["items", "query"])
+fun RecyclerView.bindingItem(result: SearchResult, query: String) {
     if (result.documents.size > 0) {
         if (this.adapter != null) {
             (this.adapter as MainRecyclerViewAdapter).run {
                 replaceAll(result.documents)
                 notifyDataSetChanged()
+                setQuery(query)
             }
         }
     } else {
@@ -47,15 +48,15 @@ fun RecyclerView.bindingItem(result: SearchResult) {
 @BindingAdapter("glideImageUrl")
 fun ImageView.loadImage(imageUrl: String) {
     GlideApp.with(this.context)
-        .load(imageUrl)
-        .thumbnail(
-            GlideApp.with(this.context)
-                .load(imageUrl)
-                .override(200, 200)
-        )
-        .centerCrop()
-        .override(200, 200)
-        .into(this)
+            .load(imageUrl)
+            .thumbnail(
+                    GlideApp.with(this.context)
+                            .load(imageUrl)
+                            .override(200, 200)
+            )
+            .centerCrop()
+            .override(200, 200)
+            .into(this)
 }
 
 //메인 상태 메시지 바인딩
@@ -79,38 +80,38 @@ fun TextView.imageCheck(result: SearchResult, state: LoadingState) {
 @BindingAdapter(value = ["originalImageUrl", "vm"])
 fun ImageView.originalImageUrl(imageUrl: String, vm: DetailViewModel) {
 
-    val decodeURL = URLDecoder.decode(imageUrl, "UTF-8").replace("&","%26")
+    val decodeURL = URLDecoder.decode(imageUrl, "UTF-8").replace("&", "%26")
 
     GlideApp.with(this.context).asBitmap()
-        .load(decodeURL)
-        .listener(object : RequestListener<Bitmap> {
-            override fun onLoadFailed(
-                e: GlideException?,
-                model: Any?,
-                target: Target<Bitmap>?,
-                isFirstResource: Boolean
-            ): Boolean {
-                vm.setStateNotExit()
-                return false
-            }
+            .load(decodeURL)
+            .listener(object : RequestListener<Bitmap> {
+                override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Bitmap>?,
+                        isFirstResource: Boolean
+                ): Boolean {
+                    vm.setStateNotExit()
+                    return false
+                }
 
-            override fun onResourceReady(
-                resource: Bitmap?,
-                model: Any?,
-                target: Target<Bitmap>?,
-                dataSource: DataSource?,
-                isFirstResource: Boolean
-            ): Boolean {
-                vm.setStateWait()
-                return false
-            }
-        })
-        .into(object : BitmapImageViewTarget(this) {
-            override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                super.onResourceReady(resource, transition)
-                vm.setBitmap(resource)
-            }
-        })
+                override fun onResourceReady(
+                        resource: Bitmap?,
+                        model: Any?,
+                        target: Target<Bitmap>?,
+                        dataSource: DataSource?,
+                        isFirstResource: Boolean
+                ): Boolean {
+                    vm.setStateWait()
+                    return false
+                }
+            })
+            .into(object : BitmapImageViewTarget(this) {
+                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                    super.onResourceReady(resource, transition)
+                    vm.setBitmap(resource)
+                }
+            })
 }
 
 
@@ -120,7 +121,7 @@ fun ProgressBar.detailToggle(state: LoadingState) {
     if (state == LoadingState.LOADING) {
         this.visibility = VISIBLE
     } else if (state == LoadingState.WAIT || state == LoadingState.NETWORK_ERROR ||
-        state == LoadingState.NOT_FOUND || state == LoadingState.SUCCESS || state == LoadingState.NOT_EXIST
+            state == LoadingState.NOT_FOUND || state == LoadingState.SUCCESS || state == LoadingState.NOT_EXIST
     ) {
         this.visibility = GONE
     }

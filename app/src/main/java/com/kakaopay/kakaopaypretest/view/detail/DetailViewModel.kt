@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.kakaopay.kakaopaypretest.R
 import com.kakaopay.kakaopaypretest.constant.LoadingState
+import com.kakaopay.kakaopaypretest.model.ImageItem
 import com.kakaopay.kakaopaypretest.util.BitmapSaver
 import io.reactivex.Maybe
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -23,12 +24,11 @@ class DetailViewModel(application: Application) : AndroidViewModel(application) 
 
     }
 
-    private val _itemSeq = MutableLiveData<String>().apply {
-        value = ""
+
+    private val _items = MutableLiveData<ArrayList<ImageItem>>().apply {
+        value = ArrayList()
     }
-    val itemSeq: LiveData<String> get() = _imageURL
-
-
+    val items: LiveData<ArrayList<ImageItem>> get() = _items
 
     private val _imageURL = MutableLiveData<String>().apply {
         value = ""
@@ -62,21 +62,39 @@ class DetailViewModel(application: Application) : AndroidViewModel(application) 
         _imageBitmap.value = bitmap
     }
 
+    private lateinit var query: String
+
+    fun setQuery(query: String) {
+        this.query = query
+    }
+
+
+    private var position: Int? = null
+
+    fun setPosition(position: Int) {
+        this.position = position
+    }
+
+    fun setItems(list: ArrayList<ImageItem>){
+        _items.value = list
+    }
+
+
 
     fun saveImage(): Boolean {
         if (imageBitmap.value != null && state.value != LoadingState.LOADING) {
             _state.value = LoadingState.LOADING
             val observable = Maybe.just(imageBitmap.value)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
             addDisposable(
-                    observable
-                            .subscribe({
-                                _state.value = LoadingState.SUCCESS
-                                BitmapSaver.saveImage(it!!, appContext, appContext.resources.getString(R.string.app_name))
-                            }, {
-                                _state.value = LoadingState.NETWORK_ERROR
-                            })
+                observable
+                    .subscribe({
+                        _state.value = LoadingState.SUCCESS
+                        BitmapSaver.saveImage(it!!, appContext, appContext.resources.getString(R.string.app_name))
+                    }, {
+                        _state.value = LoadingState.NETWORK_ERROR
+                    })
             )
             return true
         } else if (imageBitmap.value == null) {

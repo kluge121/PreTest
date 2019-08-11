@@ -22,6 +22,7 @@ import com.kakaopay.kakaopaypretest.R
 import com.kakaopay.kakaopaypretest.constant.LoadingState
 import com.kakaopay.kakaopaypretest.custom.BaseActivity
 import com.kakaopay.kakaopaypretest.databinding.ActivityDetailBinding
+import com.kakaopay.kakaopaypretest.model.ImageItem
 import kotlin.math.abs
 
 
@@ -30,7 +31,7 @@ class DetailActivity : BaseActivity() {
     private lateinit var detailBinding: ActivityDetailBinding
     private val detailViewModel: DetailViewModel by lazy {
         ViewModelProviders.of(this, ViewModelProvider.AndroidViewModelFactory(application))
-                .get(DetailViewModel::class.java)
+            .get(DetailViewModel::class.java)
     }
     lateinit var gestureDetector: GestureDetector
 
@@ -45,7 +46,15 @@ class DetailActivity : BaseActivity() {
 
         val position = intent.getIntExtra("position", -1)
         val imageURL = intent.getStringExtra("url") as String
+        val query = intent.getStringExtra("query") as String
+        val items = intent.getParcelableArrayListExtra<ImageItem>("items")
+
         detailViewModel.setLiveDataImageURL(imageURL)
+        detailViewModel.setQuery(query)
+        detailViewModel.setPosition(position)
+        detailViewModel.setItems(items)
+
+
         detailBinding.vm = detailViewModel
         detailBinding.activity = this
         detailBinding.lifecycleOwner = this
@@ -71,12 +80,12 @@ class DetailActivity : BaseActivity() {
     fun saveBitmapImage(view: View) {
         if (detailViewModel.state.value != LoadingState.LOADING) {
             val permissionCheck =
-                    ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
             if (permissionCheck == PackageManager.PERMISSION_DENIED) {
                 ActivityCompat.requestPermissions(
-                        this,
-                        arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                        100
+                    this,
+                    arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                    100
                 )
             } else {
                 detailViewModel.saveImage()
@@ -102,11 +111,11 @@ class DetailActivity : BaseActivity() {
             title = getString(R.string.dialog_title_permission_request)
             setMessage(getString(R.string.need_permission_msg))
             setPositiveButton(
-                    getString(R.string.go_to_permission_set)
+                getString(R.string.go_to_permission_set)
             ) { dialogInterface, diaglogInt ->
 
                 val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                        .setData(Uri.parse("package:$packageName"))
+                    .setData(Uri.parse("package:$packageName"))
                 startActivity(intent)
             }
             setNegativeButton(getString(R.string.msg_cancel)) { dialogInterface, diaglogInt ->
