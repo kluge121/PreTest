@@ -29,7 +29,6 @@ class DetailViewModel(application: Application) : AndroidViewModel(application) 
     val itemSeq: LiveData<String> get() = _imageURL
 
 
-
     private val _imageURL = MutableLiveData<String>().apply {
         value = ""
     }
@@ -67,16 +66,16 @@ class DetailViewModel(application: Application) : AndroidViewModel(application) 
         if (imageBitmap.value != null && state.value != LoadingState.LOADING) {
             _state.value = LoadingState.LOADING
             val observable = Maybe.just(imageBitmap.value)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
             addDisposable(
-                    observable
-                            .subscribe({
-                                _state.value = LoadingState.SUCCESS
-                                BitmapSaver.saveImage(it!!, appContext, appContext.resources.getString(R.string.app_name))
-                            }, {
-                                _state.value = LoadingState.NETWORK_ERROR
-                            })
+                observable
+                    .subscribe({
+                        BitmapSaver.saveImage(it!!, appContext, appContext.resources.getString(R.string.app_name))
+                        _state.postValue(LoadingState.SUCCESS)
+                    }, {
+                        _state.postValue(LoadingState.NETWORK_ERROR)
+                    })
             )
             return true
         } else if (imageBitmap.value == null) {
