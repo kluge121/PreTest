@@ -23,11 +23,6 @@ class DetailViewModel(application: Application) : AndroidViewModel(application) 
 
     }
 
-    private val _itemSeq = MutableLiveData<String>().apply {
-        value = ""
-    }
-    val itemSeq: LiveData<String> get() = _imageURL
-
 
     private val _imageURL = MutableLiveData<String>().apply {
         value = ""
