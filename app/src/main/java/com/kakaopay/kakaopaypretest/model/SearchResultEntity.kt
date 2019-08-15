@@ -4,13 +4,13 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class SearchResult(
-    var documents: MutableList<ImageItem>,
-    var meta: Meta?
+        var documents: MutableList<ImageItem>,
+        var meta: Meta?
 
 ) : Parcelable {
     constructor(source: Parcel) : this(
-        source.createTypedArrayList(ImageItem.CREATOR)!!,
-        source.readParcelable<Meta>(Meta::class.java.classLoader)
+            source.createTypedArrayList(ImageItem.CREATOR)!!,
+            source.readParcelable<Meta>(Meta::class.java.classLoader)
     )
 
     override fun describeContents() = 0
@@ -30,15 +30,15 @@ data class SearchResult(
 }
 
 data class Meta(
-    var total_count: Int,
-    var pageable_count: Int,
-    var is_end: Boolean
+        var total_count: Int,
+        var pageable_count: Int,
+        var is_end: Boolean
 
 ) : Parcelable {
     constructor(source: Parcel) : this(
-        source.readInt(),
-        source.readInt(),
-        1 == source.readInt()
+            source.readInt(),
+            source.readInt(),
+            1 == source.readInt()
     )
 
     override fun describeContents() = 0
@@ -59,24 +59,24 @@ data class Meta(
 }
 
 data class ImageItem(
-    var collection: String,
-    var thumbnail_url: String,
-    var image_url: String,
-    var width: Int,
-    var height: Int,
-    var display_sitename: String,
-    var doc_url: String,
-    var datetime: String
+        var collection: String,
+        var thumbnail_url: String,
+        var image_url: String,
+        var width: Int,
+        var height: Int,
+        var display_sitename: String,
+        var doc_url: String,
+        var datetime: String
 ) : Parcelable {
     constructor(source: Parcel) : this(
-        source.readString()!!,
-        source.readString()!!,
-        source.readString()!!,
-        source.readInt(),
-        source.readInt(),
-        source.readString()!!,
-        source.readString()!!,
-        source.readString()!!
+            source.readString()!!,
+            source.readString()!!,
+            source.readString()!!,
+            source.readInt(),
+            source.readInt(),
+            source.readString()!!,
+            source.readString()!!,
+            source.readString()!!
     )
 
     override fun describeContents() = 0

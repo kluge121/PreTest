@@ -2,9 +2,13 @@ package com.kakaopay.kakaopaypretest.view.main
 
 import android.content.Intent
 import android.graphics.Rect
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
+import androidx.cardview.widget.CardView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,6 +27,7 @@ class MainRecyclerViewAdapter(screenWidthSize: Int) : RecyclerView.Adapter<BaseI
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseImageViewHolder<ImageItem> {
+
         val binding: ItemMainImageBinding =
                 DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_main_image, parent, false)
 
@@ -68,6 +73,7 @@ class NormalImageViewHolder<T>(var binding: ItemMainImageBinding) : BaseImageVie
         val intent = Intent(binding.root.context, DetailActivity::class.java)
         intent.apply {
             putExtra("url", url)
+            putExtra("position", adapterPosition)
         }
         binding.root.context.startActivity(intent)
     }

@@ -23,5 +23,7 @@ class EmptySubmitSearchView : SearchView {
             listener?.onQueryTextSubmit(query.toString())
             true
         }
+
+
     }
 }

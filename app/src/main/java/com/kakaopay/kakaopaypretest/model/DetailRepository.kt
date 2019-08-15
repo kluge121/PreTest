@@ -11,12 +11,12 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.net.URLEncoder
 
-class MainRepository {
+class DetailRepository {
 
-    fun searchImage(query: String, sort: KakaoImageSearchSortEnum, page: Int, size: Int): Single<SearchResult> {
+
+    fun searchDetailImage(query: String, sort: KakaoImageSearchSortEnum, page: Int, size: Int): Single<SearchResult> {
         val header = "KakaoAK $KAKAO_REST_KEY"
-        return RetrofitProvider.getSearchService()
-            .searchImage(header, URLEncoder.encode(query, "UTF-8"), sort.name, page, size)
+        return RetrofitProvider.getSearchService().searchImage(header, URLEncoder.encode(query, "UTF-8"), sort.name, page + 1, size + 1)
     }
 
 

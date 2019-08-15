@@ -1,5 +1,6 @@
 package com.kakaopay.kakaopaypretest.view.main
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -32,7 +33,7 @@ class MainViewModel : ViewModel() {
 
     private var page: Int = 0
     private var query: String = ""
-    private var isNextPage: Boolean = false
+    private var isEndPage: Boolean = false
 
     private val repository: MainRepository by lazy {
         MainRepository()
@@ -59,8 +60,8 @@ class MainViewModel : ViewModel() {
                             if (it.documents.size == 0) {
                                 _state.value = LoadingState.NOT_FOUND
                             } else {
-                                isNextPage = it.meta!!.is_end
-                                _state.value = LoadingState.WAIT
+                                isEndPage = it.meta!!.is_end
+                                _state.value = LoadingState.SUCCESS
                             }
                             _imageSearchResultLiveData.value = it
                         }, {
@@ -71,12 +72,12 @@ class MainViewModel : ViewModel() {
 
     fun addSearchImage(sort: KakaoImageSearchSortEnum, size: Int) {
         _state.value = LoadingState.LOADING
-        if (!isNextPage) {
+        if (!isEndPage) {
             addDisposable(
                     getSearchSingleImage(this.query, sort, page + 1, size)
                             .subscribe({
-                                isNextPage = it.meta!!.is_end
-                                _state.value = LoadingState.WAIT
+                                isEndPage = it.meta!!.is_end
+                                _state.value = LoadingState.SUCCESS
                                 val result = _imageSearchResultLiveData.value
                                 result!!.documents.addAll(it.documents)
                                 _imageSearchResultLiveData.value = result
@@ -92,6 +93,7 @@ class MainViewModel : ViewModel() {
         _imageSearchResultLiveData.postValue(SearchResult(mutableListOf(), null))
         page = 0
         query = ""
+        _state.value = LoadingState.WAIT
     }
 
     private fun addDisposable(disposable: Disposable) {
