@@ -11,7 +11,7 @@ MVVM
 * Retrofit
   
 ## 설명
-* Retrofit + Rgson + Rx를 통해서 API를 호출하고 이미지 검색 결과를 가져옵니다.
+* Retrofit + Gson + Rx를 통해서 API를 호출하고 이미지 검색 결과를 가져옵니다.
 가져온 결과는 Endless RecyclerView에 전달되고 스크롤을 통해 추가 검색 결과를 불러옵니다.
 LiveData와 Data Binding을 통하여 변경사항을 감지하여 각종 View (RecyclcerView, ProgressBar 등등)를 업데이트합니다.
 
