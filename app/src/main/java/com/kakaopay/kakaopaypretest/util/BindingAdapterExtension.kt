@@ -16,7 +16,7 @@ import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
 import com.kakaopay.kakaopaypretest.R
 import com.kakaopay.kakaopaypretest.constant.LoadingState
-import com.kakaopay.kakaopaypretest.model.SearchResult
+import com.kakaopay.kakaopaypretest.model.SearchResultEntity
 import com.kakaopay.kakaopaypretest.view.detail.DetailViewModel
 import com.kakaopay.kakaopaypretest.view.main.MainRecyclerViewAdapter
 import java.net.URLDecoder
@@ -24,17 +24,17 @@ import java.net.URLDecoder
 
 //검색 결과의 리스트 RecyclerView Adapter list에 제공
 @BindingAdapter("items")
-fun RecyclerView.bindingItem(result: SearchResult) {
-    if (result.documents.size > 0) {
+fun RecyclerView.bindingItem(resultEntity: SearchResultEntity) {
+    if (resultEntity.documents.size > 0) {
         if (this.adapter != null) {
             (this.adapter as MainRecyclerViewAdapter).run {
-                replaceAll(result.documents)
+                replaceAll(resultEntity.documents)
                 notifyDataSetChanged()
             }
         }
     } else {
         (this.adapter as MainRecyclerViewAdapter).run {
-            replaceAll(result.documents)
+            replaceAll(resultEntity.documents)
             notifyDataSetChanged()
         }
     }
@@ -56,12 +56,12 @@ fun ImageView.loadImage(imageUrl: String) {
 }
 
 //메인 상태 메시지 바인딩
-@BindingAdapter(value = ["result", "progress"])
-fun TextView.imageCheck(result: SearchResult, state: LoadingState) {
-    if (result.documents.size == 0 && state == LoadingState.WAIT) {
+@BindingAdapter(value = ["resultEntity", "progress"])
+fun TextView.imageCheck(resultEntity: SearchResultEntity, state: LoadingState) {
+    if (resultEntity.documents.size == 0 && state == LoadingState.WAIT) {
         this.text = context.getString(R.string.search_do_it)
         this.visibility = VISIBLE
-    } else if (result.documents.size == 0 && state == LoadingState.NOT_FOUND) {
+    } else if (resultEntity.documents.size == 0 && state == LoadingState.NOT_FOUND) {
         this.text = context.getString(R.string.not_found)
         this.visibility = VISIBLE
     } else if (state == LoadingState.LOADING) {

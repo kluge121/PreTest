@@ -79,7 +79,7 @@ class MainActivity : BaseActivity() {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query!!.isNotEmpty() && mainViewModel.state.value != LoadingState.LOADING) {
                     searchView.clearFocus()
-                    mainViewModel.searchImage(
+                    mainViewModel.getSearchImageResult(
                             query,
                             KakaoImageSearchSortEnum.ACCURACY,
                             DEFAULT_SEARCH_IMAGE_PAGE,

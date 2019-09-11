@@ -3,7 +3,7 @@ package com.kakaopay.kakaopaypretest.model
 import android.os.Parcel
 import android.os.Parcelable
 
-data class SearchResult(
+data class SearchResultEntity(
         var documents: MutableList<ImageItem>,
         var meta: Meta?
 
@@ -22,9 +22,9 @@ data class SearchResult(
 
     companion object {
         @JvmField
-        val CREATOR: Parcelable.Creator<SearchResult> = object : Parcelable.Creator<SearchResult> {
-            override fun createFromParcel(source: Parcel): SearchResult = SearchResult(source)
-            override fun newArray(size: Int): Array<SearchResult?> = arrayOfNulls(size)
+        val CREATOR: Parcelable.Creator<SearchResultEntity> = object : Parcelable.Creator<SearchResultEntity> {
+            override fun createFromParcel(source: Parcel): SearchResultEntity = SearchResultEntity(source)
+            override fun newArray(size: Int): Array<SearchResultEntity?> = arrayOfNulls(size)
         }
     }
 }

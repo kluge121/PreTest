@@ -28,7 +28,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/mainRecyclerView"
-            items="@{vm.imageSearchResultLiveData}"
+            items="@{vm.imageSearchResultEntityLiveData}"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@color/white"
@@ -49,7 +49,7 @@
 
             <TextView
                 progress="@{vm.state}"
-                result="@{vm.imageSearchResultLiveData}"
+                resultEntity="@{vm.imageSearchResultEntityLiveData}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/search_do_it" />
