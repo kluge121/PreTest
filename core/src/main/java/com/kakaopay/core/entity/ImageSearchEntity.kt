@@ -1,11 +1,11 @@
-package com.kakaopay.kakaopaypretest.model
+package com.kakaopay.core.entity
 
 import android.os.Parcel
 import android.os.Parcelable
 
-data class SearchResultEntity(
-        var documents: MutableList<ImageItem>,
-        var meta: Meta?
+data class ImageSearchEntity(
+    var documents: MutableList<ImageItem>,
+    var meta: Meta?
 
 ) : Parcelable {
     constructor(source: Parcel) : this(
@@ -22,9 +22,10 @@ data class SearchResultEntity(
 
     companion object {
         @JvmField
-        val CREATOR: Parcelable.Creator<SearchResultEntity> = object : Parcelable.Creator<SearchResultEntity> {
-            override fun createFromParcel(source: Parcel): SearchResultEntity = SearchResultEntity(source)
-            override fun newArray(size: Int): Array<SearchResultEntity?> = arrayOfNulls(size)
+        val CREATOR: Parcelable.Creator<ImageSearchEntity> = object : Parcelable.Creator<ImageSearchEntity> {
+            override fun createFromParcel(source: Parcel): ImageSearchEntity =
+                ImageSearchEntity(source)
+            override fun newArray(size: Int): Array<ImageSearchEntity?> = arrayOfNulls(size)
         }
     }
 }
@@ -52,7 +53,8 @@ data class Meta(
     companion object {
         @JvmField
         val CREATOR: Parcelable.Creator<Meta> = object : Parcelable.Creator<Meta> {
-            override fun createFromParcel(source: Parcel): Meta = Meta(source)
+            override fun createFromParcel(source: Parcel): Meta =
+                Meta(source)
             override fun newArray(size: Int): Array<Meta?> = arrayOfNulls(size)
         }
     }
@@ -95,7 +97,8 @@ data class ImageItem(
     companion object {
         @JvmField
         val CREATOR: Parcelable.Creator<ImageItem> = object : Parcelable.Creator<ImageItem> {
-            override fun createFromParcel(source: Parcel): ImageItem = ImageItem(source)
+            override fun createFromParcel(source: Parcel): ImageItem =
+                ImageItem(source)
             override fun newArray(size: Int): Array<ImageItem?> = arrayOfNulls(size)
         }
     }

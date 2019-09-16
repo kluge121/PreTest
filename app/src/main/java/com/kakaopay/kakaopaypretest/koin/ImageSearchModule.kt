@@ -1,8 +1,8 @@
 package com.kakaopay.kakaopaypretest.koin
 
 import com.kakaopay.kakaopaypretest.coroutine.CoroutineRetrofit
-import com.kakaopay.kakaopaypretest.coroutine.ImageSearchRepository
-import com.kakaopay.kakaopaypretest.coroutine.ImageSearchRepositoryImpl
+import com.kakaopay.core.repository.search.ImageSearchRepository
+import com.kakaopay.core.repository.search.ImageSearchRepositoryImpl
 import org.koin.dsl.module
 
 
@@ -12,6 +12,10 @@ val searchModule = module {
     factory { CoroutineRetrofit.getSearchService() }
 
     // Usecase 생성자인 Repository 주입
-    factory<ImageSearchRepository> { ImageSearchRepositoryImpl(remote = get()) }
+    factory<com.kakaopay.core.repository.search.ImageSearchRepository> {
+        com.kakaopay.core.repository.search.ImageSearchRepositoryImpl(
+            remote = get()
+        )
+    }
 
 }

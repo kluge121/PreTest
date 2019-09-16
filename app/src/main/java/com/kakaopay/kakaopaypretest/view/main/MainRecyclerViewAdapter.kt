@@ -2,13 +2,9 @@ package com.kakaopay.kakaopaypretest.view.main
 
 import android.content.Intent
 import android.graphics.Rect
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
-import androidx.cardview.widget.CardView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,17 +12,17 @@ import com.kakaopay.kakaopaypretest.BR
 import com.kakaopay.kakaopaypretest.R
 import com.kakaopay.kakaopaypretest.constant.MAIN_GRID_COLUMN
 import com.kakaopay.kakaopaypretest.databinding.ItemMainImageBinding
-import com.kakaopay.kakaopaypretest.model.ImageItem
+import com.kakaopay.core.entity.ImageItem
 import com.kakaopay.kakaopaypretest.view.detail.DetailActivity
 
 
-class MainRecyclerViewAdapter(screenWidthSize: Int) : RecyclerView.Adapter<BaseImageViewHolder<ImageItem>>() {
+class MainRecyclerViewAdapter(screenWidthSize: Int) : RecyclerView.Adapter<BaseImageViewHolder<com.kakaopay.core.entity.ImageItem>>() {
 
-    private val items = mutableListOf<ImageItem>()
+    private val items = mutableListOf<com.kakaopay.core.entity.ImageItem>()
     private val itemSize = screenWidthSize / MAIN_GRID_COLUMN
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseImageViewHolder<ImageItem> {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseImageViewHolder<com.kakaopay.core.entity.ImageItem> {
 
         val binding: ItemMainImageBinding =
                 DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_main_image, parent, false)
@@ -40,7 +36,7 @@ class MainRecyclerViewAdapter(screenWidthSize: Int) : RecyclerView.Adapter<BaseI
 
     }
 
-    override fun onBindViewHolder(holder: BaseImageViewHolder<ImageItem>, position: Int) {
+    override fun onBindViewHolder(holder: BaseImageViewHolder<com.kakaopay.core.entity.ImageItem>, position: Int) {
         if (holder is NormalImageViewHolder) {
             holder.bindView(items[position])
         }
@@ -48,7 +44,7 @@ class MainRecyclerViewAdapter(screenWidthSize: Int) : RecyclerView.Adapter<BaseI
 
     override fun getItemCount() = items.size
 
-    fun replaceAll(newItem: MutableList<ImageItem>) {
+    fun replaceAll(newItem: MutableList<com.kakaopay.core.entity.ImageItem>) {
         items.clear()
         items.addAll(newItem)
     }
@@ -69,7 +65,7 @@ class NormalImageViewHolder<T>(var binding: ItemMainImageBinding) : BaseImageVie
     }
 
     fun showDetailImage(view: View) {
-        val url = (binding.item as ImageItem).image_url
+        val url = (binding.item as com.kakaopay.core.entity.ImageItem).image_url
         val intent = Intent(binding.root.context, DetailActivity::class.java)
         intent.apply {
             putExtra("url", url)

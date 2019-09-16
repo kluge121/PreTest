@@ -3,13 +3,11 @@ package com.kakaopay.kakaopaypretest.view.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.kakaopay.kakaopaypretest.constant.KakaoImageSearchSortEnum
+import com.kakaopay.core.domain.ImageSearchUseCase
+import com.kakaopay.core.entity.ImageSearchEntity
+import com.kakaopay.core.model.search.KakaoImageSearchSortEnum
 import com.kakaopay.kakaopaypretest.constant.LoadingState
-import com.kakaopay.kakaopaypretest.coroutine.CoroutineRetrofit
-import com.kakaopay.kakaopaypretest.coroutine.ImageSearchRepositoryImpl
-import com.kakaopay.kakaopaypretest.coroutine.ImageSearchUseCase
 import com.kakaopay.kakaopaypretest.model.MainRepository
-import com.kakaopay.kakaopaypretest.model.SearchResultEntity
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -20,16 +18,18 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
-class MainViewModel : ViewModel() {
+class MainViewModel(
+    private val imageSearch: ImageSearchUseCase
+) : ViewModel() {
 
     private val compositeDisposable by lazy {
         CompositeDisposable()
     }
 
-    private val _imageSearchResultLiveData = MutableLiveData<SearchResultEntity>().apply {
-        value = SearchResultEntity(mutableListOf(), null)
+    private val _imageSearchResultLiveData = MutableLiveData<ImageSearchEntity>().apply {
+        value = ImageSearchEntity(mutableListOf(), null)
     }
-    val imageSearchResultEntityLiveData: LiveData<SearchResultEntity> get() = _imageSearchResultLiveData
+    val imageResultSearchEntityLiveData: LiveData<ImageSearchEntity> get() = _imageSearchResultLiveData
 
 
     private val _state = MutableLiveData<LoadingState>().apply {
@@ -46,15 +46,12 @@ class MainViewModel : ViewModel() {
         MainRepository()
     }
 
-    private val imageSearchUseCase =
-        ImageSearchUseCase(ImageSearchRepositoryImpl(CoroutineRetrofit.getSearchService()))
-
 
     fun getSearchImageResult(query: String, sort: KakaoImageSearchSortEnum, page: Int, size: Int) {
 
         CoroutineScope(Dispatchers.IO).launch {
             _state.postValue(LoadingState.LOADING)
-            _imageSearchResultLiveData.postValue(imageSearchUseCase(query, sort, page, size))
+            _imageSearchResultLiveData.postValue(imageSearch(query, sort, page, size))
             _state.postValue(LoadingState.SUCCESS)
         }
 
@@ -65,7 +62,7 @@ class MainViewModel : ViewModel() {
         sort: KakaoImageSearchSortEnum,
         page: Int,
         size: Int
-    ): Single<SearchResultEntity> {
+    ): Single<ImageSearchEntity> {
         return repository.searchImage(query, sort, page, size)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -112,7 +109,12 @@ class MainViewModel : ViewModel() {
 
 
     fun clearItem() {
-        _imageSearchResultLiveData.postValue(SearchResultEntity(mutableListOf(), null))
+        _imageSearchResultLiveData.postValue(
+            ImageSearchEntity(
+                mutableListOf(),
+                null
+            )
+        )
         page = 0
         query = ""
         _state.value = LoadingState.WAIT

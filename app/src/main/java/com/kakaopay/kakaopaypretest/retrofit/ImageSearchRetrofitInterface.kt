@@ -1,6 +1,6 @@
 package com.kakaopay.kakaopaypretest.retrofit
 
-import com.kakaopay.kakaopaypretest.model.SearchResultEntity
+import com.kakaopay.core.entity.SearchResultEntity
 
 import com.kakaopay.kakaopaypretest.constant.IMAGE_SEARCH_API_SUB_URL
 import io.reactivex.Single
@@ -17,5 +17,5 @@ interface ImageSearchRetrofitInterface {
         @Query("sort") sort: String,
         @Query("page") page: Int,
         @Query("size") size: Int
-    ): Single<SearchResultEntity>
+    ): Single<com.kakaopay.core.entity.SearchResultEntity>
 }
